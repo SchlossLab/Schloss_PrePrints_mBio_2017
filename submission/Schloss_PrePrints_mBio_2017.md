@@ -1,28 +1,37 @@
-## Is there a reproducibility crisis? *Meh.*
-
-# Good, better, best: a mechanism for journals to reinforce best practices for more reproducible science
-
-
-More reproducible doesn't necessarily mean better
-
-Positive reasons to focus on reproducibility
-* Greater impact
-* Re-use of code
-* Re-use of data
-* More detailed methods
-* Project organization
+---
+title: "**Pre-prints**"
+bibliography: reference.bib
+output:
+  pdf_document:
+    includes:
+      in_header: header.tex
+csl: mbio.csl
+fontsize: 11pt
+geometry: margin=1.0in
+---
 
 
-Tooling
-* Version control
-* R markdown and Jupyter notebooks
-* GNU Make
-*
 
 
-Training
+\begin{center}
+\vspace{25mm}
+Patrick D. Schloss${^\dagger}$
+
+\vspace{30mm}
+
+$\dagger$ To whom correspondence should be addressed: pschloss@umich.edu
+
+Department of Microbiology and Immunology, University of Michigan, Ann Arbor, MI
+\end{center}
 
 
-Case studies
-1. What would keep someone from outside of your research group from recreating Figure 2 from your last paper?
-2.
+\newpage
+\linenumbers
+
+## Abstract
+
+
+
+\newpage
+
+## Introduction

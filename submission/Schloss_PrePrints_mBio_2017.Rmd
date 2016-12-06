@@ -1,0 +1,63 @@
+---
+title: "**Pre-prints**"
+bibliography: reference.bib
+output:
+  pdf_document:
+    includes:
+      in_header: header.tex
+csl: mbio.csl
+fontsize: 11pt
+geometry: margin=1.0in
+---
+
+
+```{r knitr_settings, eval=TRUE, echo=FALSE, cache=FALSE}
+library(dplyr, warn.conflicts=FALSE)
+library(tidyr)
+library(knitr)
+
+opts_chunk$set("tidy" = TRUE)
+opts_chunk$set("echo" = FALSE)
+opts_chunk$set("eval" = TRUE)
+opts_chunk$set("warning" = FALSE)
+opts_chunk$set("cache" = FALSE)
+
+inline_hook <- function(x){
+	print(x)
+	if(is.numeric(x)){
+		if(abs(x - round(x)) < .Machine$double.eps^0.5){
+			paste(format(x,big.mark=',', digits=0, scientific=FALSE))
+		} else {
+			paste(format(x,big.mark=',', digits=2, nsmall=2, scientific=FALSE))
+		}
+
+	} else {
+    	paste(x)      
+	}
+}
+knitr::knit_hooks$set(inline=inline_hook)
+
+```
+
+\begin{center}
+\vspace{25mm}
+Patrick D. Schloss${^\dagger}$
+
+\vspace{30mm}
+
+$\dagger$ To whom correspondence should be addressed: pschloss@umich.edu
+
+Department of Microbiology and Immunology, University of Michigan, Ann Arbor, MI
+\end{center}
+
+
+\newpage
+\linenumbers
+
+## Abstract
+
+
+
+\newpage
+
+## Introduction

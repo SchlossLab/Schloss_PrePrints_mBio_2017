@@ -1,4 +1,4 @@
-SUBMISSION_STUB = submission/Schloss_PrePrints_mBio_2017
-
-$(SUBMISSION_STUB).pdf : $(SUBMISSION_STUB).md submission/header.tex
-	pandoc -s --include-in-header=submission/header.tex -V geometry:margin=1in -o $@ $<
+write.paper : 
+	R -e "render('submission/Schloss_PrePrints_mBio_2017.Rmd', clean=FALSE)"
+	mv submission/Schloss_PrePrints_mBio_2017.utf8.md submission/Schloss_PrePrints_mBio_2017.md
+	rm submission/Schloss_PrePrints_mBio_2017.knit.md
