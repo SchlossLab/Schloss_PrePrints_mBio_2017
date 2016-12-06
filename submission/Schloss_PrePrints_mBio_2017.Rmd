@@ -57,7 +57,45 @@ Department of Microbiology and Immunology, University of Michigan, Ann Arbor, MI
 ## Abstract
 
 
+## Importance
+
 
 \newpage
 
 ## Introduction
+* Better represents the scientific method
+* ASM Policies towards Pre-prints
+	* Bring 'em on
+	* Citable
+	* Direct submission
+	* mSphereDirect
+
+## Critiques
+* Half-baked science
+	* Sure. What's your point
+	* Post-publication peer review
+* Will get scooped
+	* No, PP establish priority
+
+## Pre-print host landscape
+* Review different sites
+* Licensing
+* Cost
+* Opportunity for comments
+
+## Pre-prints in microbiology
+* Rate of use among PP describing microbiology research over time
+* Number of revisions
+* Number of downloads
+* Number of PP published
+
+## Anecdotes
+* MinIon methods
+* PacBio paper
+* Tardigrade microbiome
+* NYC subway microbiome
+
+
+\newpage
+
+## References
