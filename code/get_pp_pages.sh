@@ -8,8 +8,8 @@ do
 
 	if [ "$BIORXIV_URL" != "$DOI_URL" ]
 	then
-		wget -N ${BIORXIV_URL} -P data/dois/
-		wget -N ${BIORXIV_URL}.article-info -P data/dois/
-		wget -N ${BIORXIV_URL}.article-metrics -P data/dois/
+		phantomjs code/save_page.js ${BIORXIV_URL} > `printf "data/dois/%06d" $i`
+		phantomjs code/save_page.js ${BIORXIV_URL}.article-info > `printf "data/dois/%06d.article-info" $i`
+		phantomjs code/save_page.js ${BIORXIV_URL}.article-metrics > `printf "data/dois/%06d.article-metrics" $i`
 	fi
 done
