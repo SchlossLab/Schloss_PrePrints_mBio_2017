@@ -9,7 +9,7 @@ infos <- all_files[grepl("article-info$", all_files)]
 doi <- gsub("data/dois/", "10.1101/", articles)
 
 
-article_page <- read_html(articles[1])
+article_page <- read_html(articles[length(articles)])
 metric_page <- read_html(metrics[1])
 info_page <- read_html(infos[1])
 
@@ -53,7 +53,48 @@ if(n_versions > 1){
 }
 
 
-
 #journal_published
+journal_published <- article_page %>%
+												html_nodes(".pub_jnl i") %>%
+												html_text()
+
+if(length(journal_published) != 0){
+	journal_published <- journal_published[1]
+} else {
+	journal_published <- NA
+}
+
+
 #license
+license <- article_page %>%
+						html_nodes(".license-type a") %>%
+						html_text()
+
+if(length(license) == 0){
+	license <- "None"
+}
+
+
 #category
+category <- article_page %>%
+							html_nodes(".highwire-article-collection-term") %>%
+							html_text() %>%
+							gsub("\n", "", .)
+
+#article_path
+article_path <- article_page %>%
+									html_nodes(".active a") %>%
+									html_attr("href") %>%
+									.[[1]]
+
+
+metric_table <- metric_page %>%
+									html_nodes(".highwire-stats") %>%
+									html_table() %>%
+									.[[1]]
+
+#abstract_downloads
+abstract_downloads <- sum(metric_table[,"Abstract"])
+
+#pdf_downloads
+pdf_downloads <- sum(metric_table[,"PDF"])
