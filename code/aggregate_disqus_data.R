@@ -17,7 +17,7 @@ summarize_json <- function(x){
 	t(sapply(json_data, parse_response))
 }
 
-count_list <- lapply(list.files("data/disqus", full.names=T), summarize_json)
+count_list <- lapply(list.files("data/disqus", pattern="page_.*", full.names=T), summarize_json)
 count_df <- data.frame(do.call(rbind, count_list), stringsAsFactors=F)
 colnames(count_df) <- c("article_id", "n_comments")
 count_df <- count_df[!is.na(count_df$article_id),]
