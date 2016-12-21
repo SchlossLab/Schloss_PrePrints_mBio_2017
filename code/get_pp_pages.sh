@@ -1,6 +1,10 @@
 #!/bin/bash
 
-DOIS=`cat data/dois/doi_urls.txt`
+START=$1
+END=$1
+DIFF=$(($END-$START+1))
+
+DOIS=`head -n $END data/dois/doi_urls.txt | tail -n $DIFF`
 
 for DOI_URL in $DOIS
 do
