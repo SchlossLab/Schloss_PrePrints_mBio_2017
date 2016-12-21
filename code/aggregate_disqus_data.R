@@ -30,4 +30,6 @@ count_tbl <- count_df %>%
 								group_by(article_id) %>%
 								summarize(n_comments=sum(n_comments))
 
+count_tbl <- count_tbl[grepl("^\\d{6}$", count_tbl$article_id),]
+
 write.table(count_tbl, file="data/disqus/comment_count.tsv", row.names=F, quote=F, sep='\t')

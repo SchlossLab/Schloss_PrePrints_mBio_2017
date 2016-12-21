@@ -1,100 +1,190 @@
 library(httr)
 library(rvest)
+library(dplyr)
+library(rjson)
 
-all_files <- list.files('data/dois', full.names=T)
-articles <- all_files[grepl("\\d$", all_files)]
-metrics <- all_files[grepl("article-metrics$", all_files)]
-infos <- all_files[grepl("article-info$", all_files)]
-
-doi <- gsub("data/dois/", "10.1101/", articles)
+disqus_count <- read.table(file="data/disqus/comment_count.tsv", header=T, stringsAsFactors=F)
 
 
-article_page <- read_html(articles[length(articles)])
-metric_page <- read_html(metrics[1])
-info_page <- read_html(infos[1])
+collect_data <- function(base_file){
+	print(base_file)
 
-#authors
-authors <- article_page %>%
-						html_nodes(".highwire-citation-authors") %>%
-						html_text() %>% .[[1]] %>%
-						strsplit(", ") %>% unlist
+	#base_file <- "data/dois/045708"
 
-#first_author
-first_author <- authors[1]
+	article_file <- base_file
+	metric_file <- paste0(base_file,".article-metrics")
+	info_file <- paste0(base_file,".article-info")
 
-#corr_author
-corr_author <- info_page %>%
-								html_nodes(".contributors li") %>%
-								.[[grep(">1<", .)]] %>%
-								html_nodes(".name") %>%
+	article_page <- read_html(article_file)
+
+	#doi
+	doi <- gsub("data/dois/", "10.1101/", base_file)
+
+	if(!grepl("This paper is still processing|DOI Not Found", article_page)){
+
+		metric_page <- read_html(metric_file)
+		info_page <- read_html(info_file)
+
+		#authors
+		authors <- article_page %>%
+								html_nodes(".highwire-citation-authors") %>%
+								html_text() %>% .[[1]] %>%
+								strsplit(", ") %>%
+								unlist %>%
+								gsub(" View ORCID Profile", "", .)
+
+		#first_author
+		first_author <- authors[1]
+
+		#corr_author
+		corr_author <- info_page %>%
+										html_nodes(".contributor-list li") %>%
+										.[[grep("corresp", .)]] %>%
+										html_nodes(".name") %>%
+										html_text()
+
+		#corr_author_email
+		corr_author_email <- info_page %>%
+										html_nodes(".corresp .em-addr") %>%
+										html_text()
+
+		#affiliation
+		affiliation <- info_page %>%
+										html_nodes("address") %>%
+										html_text() %>%
+										gsub("[\t\n]", "", .) %>%
+										gsub ("^\\d*", "", .) %>%
+										gsub ("^\\s*", "", .)
+
+		#n_versions
+		n_versions <- info_page %>%
+												html_nodes(".hw-version-previous-link") %>%
+												length() + 1
+
+		#date_first_deposited
+		date_first_deposited <- info_page %>% html_nodes(".publication-history") %>% html_text() %>% .[[2]] %>% gsub("Posted (.*)\\.", "\\1", .)
+
+		if(n_versions > 1){
+			date_first_deposited <- info_page %>%
+																html_nodes(".hw-version-previous-link") %>%
+																html_text() %>%
+																gsub("Previous version \\((.*) - .*\\)\\.", "\\1", .)
+		}
+
+		#journal_published
+		journal_published <- article_page %>%
+														html_nodes(".pub_jnl i") %>%
+														html_text()
+
+		if(length(journal_published) != 0){
+			journal_published <- journal_published[1]
+		} else {
+			journal_published <- NA
+		}
+
+		#license
+		license <- article_page %>%
+								html_nodes(".license-type a") %>%
 								html_text()
 
-#affiliation
-affiliation <- info_page %>%
-								html_nodes("address") %>%
-								html_text() %>%
-								gsub("[\t\n]", "", .) %>%
-								gsub ("^\\s*", "", .)
+		if(length(license) == 0){
+			license <- "None"
+		}
+
+		#category
+		category <- article_page %>%
+									html_nodes(".highwire-article-collection-term") %>%
+									html_text() %>%
+									gsub("\n", "", .)
+
+		#is_microbiology
+		test_is_microbiology <- function(x){
+			pattern <- "yeast|fung|viral|virus|archaea|bacteri|microb|microorganism|pathogen"
+			grepl(pattern, x, ignore.case = TRUE)
+		}
+
+		abstract <- article_page %>% html_nodes(".section .abstract") %>% html_text() %>% gsub("\n", " ", .)
+		title <- article_page %>% html_nodes("#page-title") %>% html_text()
+		is_microbiology <- test_is_microbiology(paste(abstract, title))
+
+		#article_path
+		article_path <- article_page %>%
+											html_nodes(".active a") %>%
+											html_attr("href") %>%
+											.[[1]]
 
 
-#n_versions
-n_versions <- info_page %>%
-										html_nodes(".hw-version-previous-link") %>%
-										length() + 1
+		#abstract_downloads
+		#pdf_downloads
+		abstract_downloads <- NA
+		pdf_downloads <- NA
 
-#date_first_deposited
-date_first_deposited <- info_page %>% html_nodes(".publication-history") %>% html_text() %>% .[[2]] %>% gsub("Posted (.*)\\.", "\\1", .)
+		if(!grepl("No statistics are available", metric_page)){
+			metric_table <- metric_page %>%
+												html_nodes(".highwire-stats") %>%
+												html_table() %>%
+												.[[1]]
 
-if(n_versions > 1){
-	date_first_deposited <- info_page %>%
-														html_nodes(".hw-version-previous-link") %>%
-														html_text() %>%
-														gsub("Previous version \\((.*) - .*\\)\\.", "\\1", .)
+			abstract_downloads <- sum(metric_table[,"Abstract"])
+
+			pdf_downloads <- sum(metric_table[,"PDF"])
+		}
+
+
+		#n_comments
+		disqus_data <- disqus_count %>%
+										filter(article_id == gsub("data/dois/", "", base_file))
+
+		n_comments <- 0
+		if(nrow(disqus_data) != 0){
+			n_comments <- disqus_data[,"n_comments"]
+		}
+
+	} else {
+		doi <- doi
+		authors <- NA
+		first_author <- NA
+		corr_author <- NA
+		corr_author_email <- NA
+		affiliation <- NA
+		n_versions <- NA
+		date_first_deposited <- NA
+		journal_published <- NA
+		category <- NA
+		is_microbiology <- NA
+		abstract_downloads <- NA
+		pdf_downloads <- NA
+		n_comments <- NA
+	}
+
+	list(
+		doi=doi,
+		authors=authors,
+		first_author=first_author,
+		corr_author=corr_author,
+		corr_author_email=corr_author_email,
+		affiliation=affiliation,
+		n_versions=n_versions,
+		date_first_deposited=date_first_deposited,
+		journal_published=journal_published,
+		category=category,
+		is_microbiology=is_microbiology,
+		abstract_downloads=abstract_downloads,
+		pdf_downloads=pdf_downloads,
+		n_comments=n_comments
+	)
+
 }
 
+base_files <- list.files(path='data/dois', pattern="^\\d{6}$", full.names=T)
+results <- lapply(base_files, collect_data)
 
-#journal_published
-journal_published <- article_page %>%
-												html_nodes(".pub_jnl i") %>%
-												html_text()
+results_json <- toJSON(results)
+write(results_json, "data/processed/biorxiv_data.json")
 
-if(length(journal_published) != 0){
-	journal_published <- journal_published[1]
-} else {
-	journal_published <- NA
-}
+#im <- sapply(z, '[[', 'is_microbiology')
+#mc <- sapply(z, '[[', 'category') == "Microbiology"
+#ca <- sapply(z, '[[', 'first_author')
 
-
-#license
-license <- article_page %>%
-						html_nodes(".license-type a") %>%
-						html_text()
-
-if(length(license) == 0){
-	license <- "None"
-}
-
-
-#category
-category <- article_page %>%
-							html_nodes(".highwire-article-collection-term") %>%
-							html_text() %>%
-							gsub("\n", "", .)
-
-#article_path
-article_path <- article_page %>%
-									html_nodes(".active a") %>%
-									html_attr("href") %>%
-									.[[1]]
-
-
-metric_table <- metric_page %>%
-									html_nodes(".highwire-stats") %>%
-									html_table() %>%
-									.[[1]]
-
-#abstract_downloads
-abstract_downloads <- sum(metric_table[,"Abstract"])
-
-#pdf_downloads
-pdf_downloads <- sum(metric_table[,"PDF"])
+#table(im, mc)
+#sort(table(ca))
