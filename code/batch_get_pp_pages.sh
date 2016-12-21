@@ -16,7 +16,7 @@ do
 done
 
 split -l 1 get_pp_pages.qsub pp_
-for file in pp_a?
+for file in pp_??
 do
 	cat head.qsub $file tail.qsub > $file.qsub
 	qsub $file.qsub
