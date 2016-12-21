@@ -1,7 +1,7 @@
 #!/bin/bash
 
 START=$1
-END=$1
+END=$2
 DIFF=$(($END-$START+1))
 
 DOIS=`head -n $END data/dois/doi_urls.txt | tail -n $DIFF`
