@@ -1,19 +1,13 @@
 #!/bin/bash
 
-START=$1
-END=$2
+DOIS=`cat data/dois/doi_urls.txt`
 
-for i in $(seq $START $END)
+for DOI_URL in $DOIS
 do
-	echo $i
-	DOI_URL=`printf "http://dx.doi.org/10.1101/%06d" $i`
-
 	BIORXIV_URL=`curl -L -o /dev/null --silent --head --write-out '%{url_effective}\n' $DOI_URL`
+	LOCAL_FILE=`echo $DOI_URL | sed "s=http://dx.doi.org/10.1101/=data/dois/=g"`
 
-	if [ "$BIORXIV_URL" != "$DOI_URL" ]
-	then
-		phantomjs code/save_page.js ${BIORXIV_URL} > `printf "data/dois/%06d" $i`
-		wget -N ${BIORXIV_URL}.article-info -P data/dois/
-		wget -N ${BIORXIV_URL}.article-metrics -P data/dois/
-	fi
+	phantomjs code/save_page.js ${BIORXIV_URL} > $LOCAL_FILE
+	wget -N ${BIORXIV_URL}.article-info -P data/dois/
+	wget -N ${BIORXIV_URL}.article-metrics -P data/dois/
 done
