@@ -13,7 +13,7 @@ DOI_ARTICLES = $(subst http://dx.doi.org/10.1101/,data/biorxiv/,$(DOI_URLS))
 #DOI_INFO = $(addsuffix .article-info,$(DOI_ARTICLES))
 #DOI_METRICS = $(addsuffix .article-metrics,$(DOI_ARTICLES))
 
-$(DOI_ARTICLES) : data/doi_urls.txt
+$(DOI_ARTICLES) : data/doi_urls.txt code/get_pp_pages.sh
 	bash code/get_pp_pages.sh $@
 
 
