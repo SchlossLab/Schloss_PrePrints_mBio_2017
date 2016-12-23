@@ -1,6 +1,6 @@
 mkdir -p data/altmetric
 
-SUFFIX=`cat data/dois/doi_urls.txt | cut -f 5 -d /
+SUFFIX=`cat data/doi_urls.txt | cut -f 5 -d /
 
 for DOI in $SUFFIX
 do

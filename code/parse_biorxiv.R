@@ -9,7 +9,7 @@ disqus_count <- read.table(file="data/disqus/comment_count.tsv", header=T, strin
 collect_data <- function(base_file){
 	print(base_file)
 
-	#base_file <- "data/dois/045708"
+	#base_file <- "data/biorxiv/045708"
 
 	article_file <- base_file
 	metric_file <- paste0(base_file,".article-metrics")
@@ -18,7 +18,7 @@ collect_data <- function(base_file){
 	article_page <- read_html(article_file)
 
 	#doi
-	doi <- gsub("data/dois/", "10.1101/", base_file)
+	doi <- gsub("data/biorxiv/", "10.1101/", base_file)
 
 	if(!grepl("This paper is still processing|DOI Not Found", article_page)){
 
@@ -133,7 +133,7 @@ collect_data <- function(base_file){
 
 		#n_comments
 		disqus_data <- disqus_count %>%
-										filter(article_id == gsub("data/dois/", "", base_file))
+										filter(article_id == gsub("data/biorxiv/", "", base_file))
 
 		n_comments <- 0
 		if(nrow(disqus_data) != 0){
@@ -176,7 +176,7 @@ collect_data <- function(base_file){
 
 }
 
-base_files <- list.files(path='data/dois', pattern="^\\d{6}$", full.names=T)
+base_files <- list.files(path='data/biorxiv', pattern="^\\d{6}$", full.names=T)
 results <- lapply(base_files, collect_data)
 
 results_json <- toJSON(results)
