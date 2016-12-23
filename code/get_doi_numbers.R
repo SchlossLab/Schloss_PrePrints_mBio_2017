@@ -30,4 +30,4 @@ while(n_articles == 1000){
 }
 
 biorxiv_urls <- urls[grepl("10.1101\\/\\d{6}", urls)]
-write(biorxiv_urls, "data/dois/doi_urls.txt")
+write(biorxiv_urls, "data/doi_urls.txt")
