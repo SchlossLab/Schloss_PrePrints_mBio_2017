@@ -14,4 +14,15 @@ do
 	phantomjs code/save_page.js ${BIORXIV_URL} > $LOCAL_FILE
 	wget -N ${BIORXIV_URL}.article-info -P data/dois/
 	wget -N ${BIORXIV_URL}.article-metrics -P data/dois/
+
+	if [ -f ${BIORXIV_URL}.[12].article-info ];
+	then
+		mv ${BIORXIV_URL}.[12].article-info ${BIORXIV_URL}.article-info
+	fi
+
+	if [ -f ${BIORXIV_URL}.[12].article-metrics ];
+	then
+		mv ${BIORXIV_URL}.[12].article-metrics ${BIORXIV_URL}.article-metrics
+	fi
+
 done
