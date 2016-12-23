@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# This takes the six digit article suffix name as input...
+
 SUFFIX=$1
 
 DOI_URL=http://dx.doi.org/10.1101/$SUFFIX
