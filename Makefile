@@ -6,7 +6,7 @@ print-%:
 data/doi_urls.txt : code/get_doi_numbers.R
 	R -e "source('code/get_doi_numbers.R')"
 
-DOI_URLS = $(shell cat data/biorxiv/doi_urls.txt)
+DOI_URLS = $(shell cat data/doi_urls.txt)
 DOI_ARTICLES = $(subst http://dx.doi.org/10.1101/,data/biorxiv/,$(DOI_URLS))
 
 #Will assume that these exist and that if they don't there's a good reason...
@@ -17,8 +17,7 @@ $(DOI_ARTICLES) : data/doi_urls.txt
 	bash code/get_pp_pages.sh $@
 
 
-data/altmetric/altmetric_summary.tsv : data/dois/doi_urls.txt code/get_altmetric.sh code/aggregate_altmetric_data.R
-	echo $^
+data/altmetric/altmetric_summary.tsv : data/doi_urls.txt code/get_altmetric.sh code/aggregate_altmetric_data.R
 	bash code/get_altmetric.sh
 	R -e source('code/aggregate_altmetric_data.R')
 
