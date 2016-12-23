@@ -2,3 +2,7 @@ data/biorxiv
 data/disqus
 data/altmetric
 *qsub*
+
+
+sync_data.sh
+check_data.sh
