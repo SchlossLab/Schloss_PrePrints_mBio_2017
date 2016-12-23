@@ -2,16 +2,17 @@
 
 # This takes the six digit article suffix name as input...
 
-SUFFIX=$1
+mkdir -p data/biorxiv
 
-DOI_URL=http://dx.doi.org/10.1101/$SUFFIX
+LOCAL_FILE=$1
+
+DOI_URL=`echo $LOCAL_FILE | sed "s=data/biorxiv/=http://dx.doi.org/10.1101/="`
 
 BIORXIV_URL=`curl -L -o /dev/null --silent --head --write-out '%{url_effective}\n' $DOI_URL`
-LOCAL_FILE=`echo $DOI_URL | sed "s=http://dx.doi.org/10.1101/=data/biorxiv/=g"`
 
 phantomjs code/save_page.js ${BIORXIV_URL} > $LOCAL_FILE
-wget -N ${BIORXIV_URL}.article-info -P data/dois/
-wget -N ${BIORXIV_URL}.article-metrics -P data/dois/
+wget -N ${BIORXIV_URL}.article-info -P data/biorxiv/
+wget -N ${BIORXIV_URL}.article-metrics -P data/biorxiv/
 
 if [ -f ${BIORXIV_URL}.[12].article-info ];
 then
