@@ -19,7 +19,7 @@ $(DOI_ARTICLES) : data/doi_urls.txt code/get_pp_pages.sh
 
 data/altmetric/altmetric_summary.tsv : data/doi_urls.txt code/get_altmetric.sh code/aggregate_altmetric_data.R
 	bash code/get_altmetric.sh
-	R -e source('code/aggregate_altmetric_data.R')
+	R -e "source('code/aggregate_altmetric_data.R')"
 
 
 data/disqus/comment_count.tsv : code/get_disqus_data.sh code/aggregate_disqus_data.R
