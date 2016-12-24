@@ -188,8 +188,8 @@ collect_data <- function(base_file){
 		abstract_downloads=abstract_downloads,
 		pdf_downloads=pdf_downloads,
 		n_comments=n_comments,
-		altmetric_score,
-		altmetric_percentile
+		altmetric_score=altmetric_score,
+		altmetric_percentile=altmetric_percentile
 	)
 
 }
@@ -199,10 +199,3 @@ results <- lapply(base_files, collect_data)
 
 results_json <- toJSON(results)
 write(results_json, "data/processed/biorxiv_data.json")
-
-#im <- sapply(z, '[[', 'is_microbiology')
-#mc <- sapply(z, '[[', 'category') == "Microbiology"
-#ca <- sapply(z, '[[', 'first_author')
-
-#table(im, mc)
-#sort(table(ca))
