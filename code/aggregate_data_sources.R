@@ -198,4 +198,4 @@ base_files <- list.files(path='data/biorxiv', pattern="^\\d{6}$", full.names=T)
 results <- lapply(base_files, collect_data)
 
 results_json <- toJSON(results)
-write(results_json, "data/processed/biorxiv_data.json")
+write(results_json, "data/processed/biorxiv_data_summary.json")
