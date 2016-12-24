@@ -4,12 +4,14 @@ library(dplyr)
 library(rjson)
 
 disqus_count <- read.table(file="data/disqus/comment_count.tsv", header=T, stringsAsFactors=F)
+altmetric_score <- read.table(file="data/altmetric/altmetric_summary.tsv", header=T,
+												stringsAsFactors=F, colClasses=c("character", "numeric", "numeric"))
 
 
 collect_data <- function(base_file){
 	print(base_file)
 
-	#base_file <- "data/biorxiv/045708"
+	base_file <- "data/biorxiv/000026"
 
 	article_file <- base_file
 	metric_file <- paste0(base_file,".article-metrics")
@@ -126,7 +128,6 @@ collect_data <- function(base_file){
 												.[[1]]
 
 			abstract_downloads <- sum(metric_table[,"Abstract"])
-
 			pdf_downloads <- sum(metric_table[,"PDF"])
 		}
 
@@ -139,6 +140,19 @@ collect_data <- function(base_file){
 		if(nrow(disqus_data) != 0){
 			n_comments <- disqus_data[,"n_comments"]
 		}
+
+		#altmetric_score
+		#altmetric_percentile
+		altmetric_data <- altmetric_score %>%
+										filter(article_id == gsub("data/biorxiv/", "", base_file))
+
+		altmetric_score <- 0
+		altmetric_percentile <- 0
+		if(nrow(altmetric_data) != 0){
+			altmetric_score <- altmetric_data[,"altmetric"]
+			altmetric_percentile <- altmetric_data[,"altmetric_pct"]
+		}
+
 
 	} else {
 		doi <- doi
@@ -155,6 +169,8 @@ collect_data <- function(base_file){
 		abstract_downloads <- NA
 		pdf_downloads <- NA
 		n_comments <- NA
+		altmetric_score <- NA
+		altmetric_percentile <- NA
 	}
 
 	list(
@@ -171,7 +187,9 @@ collect_data <- function(base_file){
 		is_microbiology=is_microbiology,
 		abstract_downloads=abstract_downloads,
 		pdf_downloads=pdf_downloads,
-		n_comments=n_comments
+		n_comments=n_comments,
+		altmetric_score,
+		altmetric_percentile
 	)
 
 }

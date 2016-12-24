@@ -14,13 +14,9 @@ is_microbiology
 abstract_downloads
 pdf_downloads
 n_comments
-
 altmetric_score
+
 citations
 
-http://phantomjs.org
 
-
-"No statistics are available" <- fixed
-This paper is still processing; please check again shortly <- fixed
-DOI Not Found <- fixed
+#find data/biorxiv/ -type f -size 0k -exec ls -lh {} \;
