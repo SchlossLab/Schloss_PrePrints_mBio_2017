@@ -29,11 +29,11 @@ data/disqus/comment_count.tsv : code/get_disqus_data.sh code/aggregate_disqus_da
 
 #this also depends on the DOI files...
 .SECONDEXPANSION:
-data/processed/biorxiv_data.json : $$(DOI_ARTICLES)\
+data/processed/biorxiv_data_summary.json : $$(DOI_ARTICLES)\
 																		code/parse_biorxiv.R\
 																		data/disqus/comment_count.tsv\
 																		data/altmetric/altmetric_summary.tsv
-	R -e "source('code/parse_biorxiv.R')"
+	R -e "source('code/aggregate_data_sources.R.R')"
 
 
 write.paper :
