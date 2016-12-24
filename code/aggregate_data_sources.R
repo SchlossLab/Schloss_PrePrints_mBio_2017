@@ -11,7 +11,7 @@ altmetric_score <- read.table(file="data/altmetric/altmetric_summary.tsv", heade
 collect_data <- function(base_file){
 	print(base_file)
 
-	base_file <- "data/biorxiv/000026"
+#	base_file <- "data/biorxiv/000026"
 
 	article_file <- base_file
 	metric_file <- paste0(base_file,".article-metrics")
