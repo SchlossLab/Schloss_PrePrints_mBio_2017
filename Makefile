@@ -36,6 +36,21 @@ data/processed/biorxiv_data_summary.json : $$(DOI_ARTICLES)\
 	R -e "source('code/aggregate_data_sources.R')"
 
 
+##########################################################################################
+
+
+data/asm_doi_urls.tsv : code/get_asm_doi_numbers.R
+	R -e "source('code/get_asm_doi_numbers.R')"
+
+
+data/altmetric/altmetric_summary.tsv : data/asm_doi_urls.tsv code/get_asm_altmetric.sh# code/aggregate_altmetric_data.R
+	bash code/get_asm_altmetric.sh
+#	R -e "source('code/aggregate_altmetric_data.R')"
+
+
+##########################################################################################
+
+
 write.paper :
 	R -e "render('submission/Schloss_PrePrints_mBio_2017.Rmd', clean=FALSE)"
 	mv submission/Schloss_PrePrints_mBio_2017.utf8.md submission/Schloss_PrePrints_mBio_2017.md
