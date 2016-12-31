@@ -3,8 +3,10 @@ library(rvest)
 library(dplyr)
 library(rjson)
 
-disqus_count <- read.table(file="data/disqus/comment_count.tsv", header=T, stringsAsFactors=F)
-altmetric_score <- read.table(file="data/altmetric/altmetric_summary.tsv", header=T,
+disqus_count <- read.table(file="data/biorxiv_disqus/comment_count.tsv", header=T, stringsAsFactors=F,
+												colClasses=c("character", "numeric"))
+
+altmetric_score <- read.table(file="data/biorxiv_altmetric/altmetric_summary.tsv", header=T,
 												stringsAsFactors=F, colClasses=c("character", "numeric", "numeric"))
 
 
