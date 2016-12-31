@@ -3,28 +3,28 @@ SHELL := /bin/bash
 print-%:
 	@echo '$*=$($*)'
 
-data/doi_urls.txt : code/get_doi_numbers.R
-	R -e "source('code/get_doi_numbers.R')"
+data/biorxiv_doi_urls.tsv : code/get_biorxiv_doi_numbers.R
+	R -e "source('code/get_biorxiv_doi_numbers.R')"
 
-DOI_URLS = $(shell cat data/doi_urls.txt)
+DOI_URLS = $(shell cat data/biorxiv_doi_urls.tsv)
 DOI_ARTICLES = $(subst http://dx.doi.org/10.1101/,data/biorxiv/,$(DOI_URLS))
 
 #Will assume that these exist and that if they don't there's a good reason...
 #DOI_INFO = $(addsuffix .article-info,$(DOI_ARTICLES))
 #DOI_METRICS = $(addsuffix .article-metrics,$(DOI_ARTICLES))
 
-$(DOI_ARTICLES) : data/doi_urls.txt code/get_pp_pages.sh
-	bash code/get_pp_pages.sh $@
+$(DOI_ARTICLES) : data/biorxiv_doi_urls.tsv code/get_biorxiv_pages.sh
+	bash code/get_biorxiv_pages.sh $@
 
 
-data/altmetric/altmetric_summary.tsv : data/doi_urls.txt code/get_altmetric.sh code/aggregate_altmetric_data.R
-	bash code/get_altmetric.sh
-	R -e "source('code/aggregate_altmetric_data.R')"
+data/biorxiv_altmetric/altmetric_summary.tsv : data/biorxiv_doi_urls.tsv code/get_biorxiv_altmetric.sh code/aggregate_biorxiv_altmetric_data.R
+	bash code/get_biorxiv_altmetric.sh
+	R -e "source('code/aggregate_biorxiv_altmetric_data.R')"
 
 
-data/disqus/comment_count.tsv : code/get_disqus_data.sh code/aggregate_disqus_data.R
-	bash code/get_disqus_data.sh
-	R -e "source('code/aggregate_disqus_data.R')"
+data/biorxiv_disqus/comment_count.tsv : code/get_biorxiv_disqus_data.sh code/aggregate_biorxiv_disqus_data.R
+	bash code/get_biorxiv_disqus_data.sh
+	R -e "source('code/aggregate_biorxiv_disqus_data.R')"
 
 
 #this also depends on the DOI files...

@@ -17,7 +17,7 @@ summarize_json <- function(x){
 	t(sapply(json_data, parse_response))
 }
 
-count_list <- lapply(list.files("data/disqus", pattern="page_.*", full.names=T), summarize_json)
+count_list <- lapply(list.files("data/biorxiv_disqus", pattern="page_.*", full.names=T), summarize_json)
 count_df <- data.frame(do.call(rbind, count_list), stringsAsFactors=F)
 colnames(count_df) <- c("article_id", "n_comments")
 count_df <- count_df[!is.na(count_df$article_id),]
@@ -32,4 +32,4 @@ count_tbl <- count_df %>%
 
 count_tbl <- count_tbl[grepl("^\\d{6}$", count_tbl$article_id),]
 
-write.table(count_tbl, file="data/disqus/comment_count.tsv", row.names=F, quote=F, sep='\t')
+write.table(count_tbl, file="data/biorxiv_disqus/comment_count.tsv", row.names=F, quote=F, sep='\t')

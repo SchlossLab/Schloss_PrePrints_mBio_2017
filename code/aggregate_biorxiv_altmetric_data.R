@@ -3,7 +3,7 @@ library(rjson)
 aggregate_alt_data <- function(alt_file){
 	print(alt_file)
 
-	article_id <- gsub("data/altmetric/(.{6}).json", "\\1", alt_file)
+	article_id <- gsub("data/biorxiv_altmetric/(.{6}).json", "\\1", alt_file)
 
 	json_file <- readLines(alt_file, warn=F)
 
@@ -19,11 +19,11 @@ aggregate_alt_data <- function(alt_file){
 	list(article_id=article_id, altmetric=altmetric, altmetric_pct=altmetric_pct)
 }
 
-altmetrics_files <- list.files(path="data/altmetric", pattern="*.json", full.names=T)
+altmetrics_files <- list.files(path="data/biorxiv_altmetric", pattern="*.json", full.names=T)
 alt_listed <- lapply(altmetrics_files, aggregate_alt_data)
 alt_df <- do.call(rbind.data.frame, alt_listed)
 
-write.table(alt_df, "data/altmetric/altmetric_summary.tsv", sep='\t', quote=F, row.names=F)
+write.table(alt_df, "data/biorxiv_altmetric/altmetric_summary.tsv", sep='\t', quote=F, row.names=F)
 
 
 

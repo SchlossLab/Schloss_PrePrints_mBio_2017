@@ -1,6 +1,6 @@
 data/biorxiv
-data/disqus
-data/altmetric
+data/biorxiv_disqus
+data/biorxiv_altmetric
 data/asm_altmetric
 
 *qsub*
