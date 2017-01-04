@@ -12,8 +12,8 @@ aggregate_alt_data <- function(alt_file){
 		altmetric <- alt_json$score
 		altmetric_pct <- alt_json$context$all$pct
 	} else {
-		altmetric <- NA
-		altmetric_pct <- NA
+		altmetric <- 0
+		altmetric_pct <- 0
 	}
 
 	list(article_id=article_id, altmetric=altmetric, altmetric_pct=altmetric_pct)
