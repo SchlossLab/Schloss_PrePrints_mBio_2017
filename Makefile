@@ -42,9 +42,9 @@ data/asm_doi_urls.tsv : code/get_asm_doi_numbers.R
 	R -e "source('code/get_asm_doi_numbers.R')"
 
 
-data/asm_altmetric/altmetric_summary.tsv : data/asm_doi_urls.tsv code/get_asm_altmetric.sh# code/aggregate_altmetric_data.R
+data/asm_altmetric/altmetric_summary.tsv : data/asm_doi_urls.tsv code/get_asm_altmetric.sh  code/aggregate_asm_altmetric_data.R
 	bash code/get_asm_altmetric.sh
-#	R -e "source('code/aggregate_altmetric_data.R')"
+	R -e "source('code/aggregate_asm_altmetric_data.R')"
 
 
 ##########################################################################################
