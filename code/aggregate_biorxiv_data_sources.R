@@ -109,7 +109,8 @@ collect_data <- function(base_file){
 		category <- article_page %>%
 									html_nodes(".highwire-article-collection-term") %>%
 									html_text() %>%
-									gsub("\n", "", .)
+									gsub("\n", "", .) %>%
+									.[[1]]
 
 		#is_microbiology
 		test_is_microbiology <- function(x){
@@ -198,7 +199,7 @@ collect_data <- function(base_file){
 		journal_published=journal_published,
 		category=category,
 		is_microbiology=is_microbiology,
-		license <- license,
+		license = license,
 		abstract_downloads=abstract_downloads,
 		pdf_downloads=pdf_downloads,
 		n_comments=n_comments,
@@ -210,6 +211,6 @@ collect_data <- function(base_file){
 
 base_files <- list.files(path='data/biorxiv', pattern="^\\d{6}$", full.names=T)
 results_list <- lapply(base_files, collect_data)
-results <- do.call(rbind.data.frame, results_list)
+results <- do.call(rbind, results_list)
 
 write.table(results, "data/processed/biorxiv_data_summary.tsv", quote=F, sep='\t')
