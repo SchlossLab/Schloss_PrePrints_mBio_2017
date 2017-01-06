@@ -211,6 +211,6 @@ collect_data <- function(base_file){
 
 base_files <- list.files(path='data/biorxiv', pattern="^\\d{6}$", full.names=T)
 results_list <- lapply(base_files, collect_data)
-results <- do.call(rbind, results_list)
+results <- do.call(rbind.data.frame, results_list)
 
 write.table(results, "data/processed/biorxiv_data_summary.tsv", quote=F, sep='\t')
