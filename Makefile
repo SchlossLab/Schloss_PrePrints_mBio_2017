@@ -50,7 +50,9 @@ data/asm_altmetric/altmetric_summary.tsv : data/asm_doi_urls.tsv code/get_asm_al
 ##########################################################################################
 
 
-write.paper :
+write.paper : data/processed/biorxiv_data_summary.tsv\
+							data/asm_altmetric/altmetric_summary.tsv\
+							submission/Schloss_PrePrints_mBio_2017.Rmd
 	R -e "render('submission/Schloss_PrePrints_mBio_2017.Rmd', clean=FALSE)"
 	mv submission/Schloss_PrePrints_mBio_2017.utf8.md submission/Schloss_PrePrints_mBio_2017.md
 	rm submission/Schloss_PrePrints_mBio_2017.knit.md

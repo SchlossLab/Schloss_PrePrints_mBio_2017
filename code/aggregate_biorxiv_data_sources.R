@@ -1,7 +1,6 @@
 library(httr)
 library(rvest)
 library(dplyr)
-library(rjson)
 
 disqus_count <- read.table(file="data/biorxiv_disqus/comment_count.tsv", header=T, stringsAsFactors=F,
 												colClasses=c("character", "numeric"))
@@ -58,8 +57,13 @@ collect_data <- function(base_file){
 										html_text() %>%
 										gsub("[\t\n]", "", .) %>%
 										gsub ("^\\d*", "", .) %>%
-										gsub ("^\\s*", "", .) %>%
-										.[[1]]
+										gsub ("^\\s*", "", .)
+		if(length(affiliation) != 0){
+			affiliation <- affiliation[1]
+		} else {
+			affiliation <- NA
+		}
+
 
 		#n_versions
 		n_versions <- info_page %>%
@@ -67,7 +71,11 @@ collect_data <- function(base_file){
 												length() + 1
 
 		#date_first_deposited
-		date_first_deposited <- info_page %>% html_nodes(".publication-history") %>% html_text() %>% .[[2]] %>% gsub("Posted (.*)\\.", "\\1", .)
+		date_first_deposited <- info_page %>%
+											html_nodes(".publication-history") %>%
+											html_text() %>%
+											.[[2]] %>%
+											gsub("Posted (.*)\\.", "\\1", .)
 
 		if(n_versions > 1){
 			date_first_deposited <- info_page %>%
