@@ -58,7 +58,8 @@ collect_data <- function(base_file){
 										html_text() %>%
 										gsub("[\t\n]", "", .) %>%
 										gsub ("^\\d*", "", .) %>%
-										gsub ("^\\s*", "", .)
+										gsub ("^\\s*", "", .) %>%
+										.[[1]]
 
 		#n_versions
 		n_versions <- info_page %>%
@@ -72,7 +73,8 @@ collect_data <- function(base_file){
 			date_first_deposited <- info_page %>%
 																html_nodes(".hw-version-previous-link") %>%
 																html_text() %>%
-																gsub("Previous version \\((.*) - .*\\)\\.", "\\1", .)
+																gsub("Previous version \\((.*) - .*\\)\\.", "\\1", .) %>%
+																.[[1]]
 		}
 
 		#journal_published
@@ -158,7 +160,7 @@ collect_data <- function(base_file){
 
 	} else {
 		doi <- doi
-		authors <- NA
+		# authors <- NA
 		first_author <- NA
 		corr_author <- NA
 		corr_author_email <- NA
@@ -168,6 +170,7 @@ collect_data <- function(base_file){
 		journal_published <- NA
 		category <- NA
 		is_microbiology <- NA
+		license <- NA
 		abstract_downloads <- NA
 		pdf_downloads <- NA
 		n_comments <- NA
@@ -177,7 +180,7 @@ collect_data <- function(base_file){
 
 	list(
 		doi=doi,
-		authors=authors,
+		# authors=authors,
 		first_author=first_author,
 		corr_author=corr_author,
 		corr_author_email=corr_author_email,
@@ -187,6 +190,7 @@ collect_data <- function(base_file){
 		journal_published=journal_published,
 		category=category,
 		is_microbiology=is_microbiology,
+		license <- license,
 		abstract_downloads=abstract_downloads,
 		pdf_downloads=pdf_downloads,
 		n_comments=n_comments,
@@ -197,7 +201,7 @@ collect_data <- function(base_file){
 }
 
 base_files <- list.files(path='data/biorxiv', pattern="^\\d{6}$", full.names=T)
-results <- lapply(base_files, collect_data)
+results_list <- lapply(base_files, collect_data)
+results <- do.call(rbind.data.frame, results_list)
 
-results_json <- toJSON(results)
-write(results_json, "data/processed/biorxiv_data_summary.json")
+write.table(results, "data/processed/biorxiv_data_summary.tsv", quote=F, sep='\t')
