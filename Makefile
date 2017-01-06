@@ -29,7 +29,7 @@ data/biorxiv_disqus/comment_count.tsv : code/get_biorxiv_disqus_data.sh code/agg
 
 #this also depends on the DOI files...
 .SECONDEXPANSION:
-data/processed/biorxiv_data_summary.json : $$(DOI_ARTICLES)\
+data/processed/biorxiv_data_summary.tsv : $$(DOI_ARTICLES)\
 																	code/aggregate_biorxiv_data_sources.R\
 																	data/biorxiv_disqus/comment_count.tsv\
 																	data/biorxiv_altmetric/altmetric_summary.tsv
