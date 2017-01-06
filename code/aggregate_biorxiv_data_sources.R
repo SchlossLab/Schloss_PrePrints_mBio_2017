@@ -2,8 +2,8 @@ library(httr)
 library(rvest)
 library(dplyr)
 
-disqus_count <- read.table(file="data/biorxiv_disqus/comment_count.tsv", header=T, stringsAsFactors=F,
-												colClasses=c("character", "numeric"))
+disqus_count <- read.table(file="data/biorxiv_disqus/comment_count.tsv", header=T,
+												stringsAsFactors=F, colClasses=c("character", "numeric"))
 
 altmetric_score <- read.table(file="data/biorxiv_altmetric/altmetric_summary.tsv", header=T,
 												stringsAsFactors=F, colClasses=c("character", "numeric", "numeric"))
