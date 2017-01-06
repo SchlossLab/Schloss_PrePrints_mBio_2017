@@ -109,8 +109,12 @@ collect_data <- function(base_file){
 		category <- article_page %>%
 									html_nodes(".highwire-article-collection-term") %>%
 									html_text() %>%
-									gsub("\n", "", .) %>%
-									.[[1]]
+									gsub("\n", "", .)
+		if(length(category) == 0){
+			category <- NA
+		} else {
+			category <- category[1]
+		}
 
 		#is_microbiology
 		test_is_microbiology <- function(x){
