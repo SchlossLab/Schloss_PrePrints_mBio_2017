@@ -90,10 +90,16 @@ collect_data <- function(base_file){
 														html_nodes(".pub_jnl i") %>%
 														html_text()
 
+		journal_published_doi <- article_page %>%
+															html_nodes(".pub_jnl a") %>%
+															html_attr("href")
+
 		if(length(journal_published) != 0){
 			journal_published <- journal_published[1]
+			journal_published_doi <- journal_published_doi[1]
 		} else {
 			journal_published <- NA
+			journal_published_doi <- NA
 		}
 
 		#license
@@ -181,6 +187,7 @@ collect_data <- function(base_file){
 		n_versions <- NA
 		date_first_deposited <- NA
 		journal_published <- NA
+		journal_published_doi <- NA
 		category <- NA
 		is_microbiology <- NA
 		license <- NA
@@ -201,6 +208,7 @@ collect_data <- function(base_file){
 		n_versions=n_versions,
 		date_first_deposited=date_first_deposited,
 		journal_published=journal_published,
+		journal_published_doi=journal_published_doi,
 		category=category,
 		is_microbiology=is_microbiology,
 		license = license,
