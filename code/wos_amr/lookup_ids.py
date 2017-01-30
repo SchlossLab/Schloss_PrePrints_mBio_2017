@@ -110,13 +110,15 @@ def main():
     # Write the results to a csv file.
     with open(outfile, 'wb') as of:
         writer = csv.writer(of)
-        writer.writerow(('id', 'ut', 'doi', 'pmid', 'times cited', 'source'))
+        writer.writerow(('batch', 'id', 'ut', 'doi', 'pmid', 'times cited', 'source'))
+        counter = 0
         for grp in found:
+            counter = counter + 1
             for k, item in grp.items():
                 ut = item.get('ut')
                 if ut is not None:
                     ut = "WOS:" + ut
-                writer.writerow([k, ut, item.get('doi', ""), item.get('pmid', ""), item.get('timesCited', '0'),
+                writer.writerow([counter, k, ut, item.get('doi', ""), item.get('pmid', ""), item.get('timesCited', '0'),
                                  item.get('sourceURL', 'N/A')])
 
 if __name__ == "__main__":
