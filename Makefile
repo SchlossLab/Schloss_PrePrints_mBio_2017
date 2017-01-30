@@ -35,6 +35,24 @@ data/processed/biorxiv_data_summary.tsv : $$(DOI_ARTICLES)\
 																	data/biorxiv_altmetric/altmetric_summary.tsv
 	R -e "source('code/aggregate_biorxiv_data_sources.R')"
 
+
+# pull the citation counts from WOS - need to define user id and password as stated in README
+data/wos_counts/asm_wos.csv : data/asm_doi_urls.tsv
+	echo "DOI" > data/asm_doi.csv
+	cut -f 1 data/asm_doi_urls.tsv | cut -f 4,5 -d / >> data/asm_doi.csv
+	python code/wos_amr/lookup_ids.py data/asm_doi.csv data/wos_counts/asm_wos.csv
+	rm data/asm_doi.csv
+
+
+# pull the citation counts from WOS - need to define user id and password as stated in README
+data/wos_counts/biorxiv_wos.csv : data/biorxiv_doi_urls.tsv
+	echo "DOI" > data/biorxiv_doi.csv
+	cut -f 1 data/biorxiv_doi_urls.tsv | cut -f 4,5 -d / >> data/biorxiv_doi.csv
+	python code/wos_amr/lookup_ids.py data/biorxiv_doi.csv data/wos_counts/biorxiv_wos.csv
+	rm data/biorxiv_doi.csv
+
+
+
 ##########################################################################################
 
 
