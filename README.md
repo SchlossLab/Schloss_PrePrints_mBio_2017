@@ -8,6 +8,6 @@
 Copy files from https://github.com/rpritchett/wos-amr to code/wos-amr...
 
 ```
-$ export WOS_USER="myuser"
-$ export WOS_PASSWORD="mypassword"
+$ export WOS_USER="WSMichigan_HG"
+$ export WOS_PASSWORD="C5TI3NL1"
 ```
