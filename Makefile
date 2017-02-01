@@ -45,25 +45,22 @@ data/pubd_biorxiv_doi_urls.csv : code/get_pubd_biorxiv_doi_numbers.R\
 
 
 # pull the citation counts from WOS - need to define user id and password as stated in README
-data/wos_counts/asm_wos.csv : data/asm_doi_urls.tsv
-	echo "id,DOI" > data/asm_doi.csv
-	cut -f 1 data/asm_doi_urls.tsv | cut -f 4,5 -d / | cat -n | sed -s "s/\t/,/" >> data/asm_doi.csv
-	python code/wos_amr/lookup_ids.py data/asm_doi.csv data/wos_counts/asm_wos.temp
-	head -1 data/wos_counts/asm_wos.temp > data/wos_counts/asm_wos.csv
-	tail -n+2 data/wos_counts/asm_wos.temp | sort -k 1,1 -k 2,2 -t , -n >> data/wos_counts/asm_wos.csv
+data/wos_counts/asm_wos.csv : data/asm_doi_urls.tsv code/get_asm_pub_date.R
+	echo "DOI" > data/asm_doi.csv
+	cut -f 1 data/asm_doi_urls.tsv | cut -f 4,5 -d / >> data/asm_doi.csv
+	python code/wos-amr/lookup_ids.py data/asm_doi.csv data/wos_counts/asm_wos.temp
+	R -e "source('code/get_asm_pub_date.R')"
 	rm data/asm_doi.csv data/wos_counts/asm_wos.temp
 
 # pull the citation counts from WOS - need to define user id and password as stated in README
-data/wos_counts/biorxiv_wos.csv : data/processed/biorxiv_data_summary.tsv
-	echo "ID,DOI" > data/biorxiv_doi.csv
-	grep "dx.doi.org" data/processed/biorxiv_data_summary.tsv | cut -f 9 | sed -e "s=\"http://dx.doi.org/\(.*\)\"=\1=" | iconv -c -f utf-8 -t ascii | cat -n | sed "s/\t/,/" | sed "s/ //g" >> data/biorxiv_doi.csv
+data/wos_counts/biorxiv_wos.csv : data/processed/biorxiv_data_summary.tsv code/get_biorxiv_pub_date.R
+	echo "DOI" > data/biorxiv_doi.csv
+	grep "dx.doi.org" data/processed/biorxiv_data_summary.tsv | cut -f 9 | sed -e "s=\"http://dx.doi.org/\(.*\)\"=\1=" | iconv -c -f utf-8 -t ascii >> data/biorxiv_doi.csv
 	python code/wos-amr/lookup_ids.py data/biorxiv_doi.csv data/wos_counts/biorxiv_wos.temp
-#	rm data/biorxiv_doi.csv data/wos_counts/biorxiv_wos.temp
-# need to include new R code that sorts the table and adds in the dates
+	R -e "source('code/get_biorxiv_pub_date.R')"
+	rm data/biorxiv_doi.csv data/wos_counts/biorxiv_wos.temp
 
 
-#	head -1 data/wos_counts/biorxiv_wos.temp > data/wos_counts/biorxiv_wos.csv
-#	tail -n+2 data/wos_counts/biorxiv_wos.temp | sort -k 1,1 -k 2,2 -t , -n >> data/wos_counts/biorxiv_wos.csv
 
 ##########################################################################################
 
