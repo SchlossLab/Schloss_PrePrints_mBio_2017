@@ -35,14 +35,18 @@ data/processed/biorxiv_data_summary.tsv : $$(DOI_ARTICLES)\
 																	data/biorxiv_altmetric/altmetric_summary.tsv
 	R -e "source('code/aggregate_biorxiv_data_sources.R')"
 
-
+##########################################################################################
 
 #get published biorxiv doi's and DOI_ARTICLES
 data/pubd_biorxiv_doi_urls.csv : code/get_pubd_biorxiv_doi_numbers.R\
 																	data/processed/biorxiv_data_summary.tsv
 
+data/asm_doi_urls.tsv : code/get_asm_doi_numbers.R
+	R -e "source('code/get_asm_doi_numbers.R')"
 
-
+data/asm_altmetric/altmetric_summary.tsv : data/asm_doi_urls.tsv code/get_asm_altmetric.sh  code/aggregate_asm_altmetric_data.R
+	bash code/get_asm_altmetric.sh
+	R -e "source('code/aggregate_asm_altmetric_data.R')"
 
 # pull the citation counts from WOS - need to define user id and password as stated in README
 data/wos_counts/asm_wos.csv : data/asm_doi_urls.tsv code/get_asm_pub_date.R
@@ -60,25 +64,13 @@ data/wos_counts/biorxiv_wos.csv : data/processed/biorxiv_data_summary.tsv code/g
 	R -e "source('code/get_biorxiv_pub_date.R')"
 	rm data/biorxiv_doi.csv data/wos_counts/biorxiv_wos.temp
 
-
-
-##########################################################################################
-
-
-data/asm_doi_urls.tsv : code/get_asm_doi_numbers.R
-	R -e "source('code/get_asm_doi_numbers.R')"
-
-
-data/asm_altmetric/altmetric_summary.tsv : data/asm_doi_urls.tsv code/get_asm_altmetric.sh  code/aggregate_asm_altmetric_data.R
-	bash code/get_asm_altmetric.sh
-	R -e "source('code/aggregate_asm_altmetric_data.R')"
-
-
 ##########################################################################################
 
 
 write.paper : data/processed/biorxiv_data_summary.tsv\
 							data/asm_altmetric/altmetric_summary.tsv\
+							data/wos_counts/asm_wos.csv\
+							data/wos_counts/biorxiv_wos.csv\
 							submission/Schloss_PrePrints_mBio_2017.Rmd
 	R -e "render('submission/Schloss_PrePrints_mBio_2017.Rmd', clean=FALSE)"
 	mv submission/Schloss_PrePrints_mBio_2017.utf8.md submission/Schloss_PrePrints_mBio_2017.md
