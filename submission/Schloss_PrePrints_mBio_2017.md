@@ -32,6 +32,9 @@ $2$ American Society for Microbiology, Washington, DC
 $3$ Princeton Neuroscience Institute, Princeton University, Princeton, NJ
 
 
+Format: Perspective or Commentary
+Number of words: ~4500 plus references, figures, and abstract
+
 \end{center}
 
 
@@ -40,9 +43,7 @@ $3$ Princeton Neuroscience Institute, Princeton University, Princeton, NJ
 
 ## Abstract
 
-
-## Importance
-
+The field of microbiology has experience significant growth due to rapid advances in technology and the influx of scientists driven by their curiosity to understand how bacteria, archaea, microbial eukaryotes, and viruses interact with each other and their environment to sustain myriad biochemical processes that are essential for maintaining the Earth. With this explosion in scientific output, a significant bottleneck has been the ability to disseminate this new knowledge to peers and the public in a timely manner. Preprints have emerged as a tool that a growing number of microbiologists are using to overcome this bottleneck and to recruit a broader pool of reviewers prior to submitting to traditional journals. Although use of preprints is still limited, early indications are that preprints are as robust and impactful as peer-reviewed papers. As publishing moves to embrace advances in internet technology, there are many opportunities for scientists and publishers to benefit from the use of preprints.
 
 
 \newpage
