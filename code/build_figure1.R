@@ -108,8 +108,8 @@ altmetric_plot <- source_altmetric %>% #filter(source == "biorxiv") %>%
 biorxiv_cited <- read.csv("data/wos_counts/biorxiv_wos.csv", stringsAsFactors=F)
 biorxiv_cited$doi <- tolower(biorxiv_cited$doi)
 biorxiv_cited <- inner_join(biorxiv_cited, biorxiv, by=c("doi"="journal_published_doi"))
-biorxiv_cited_affiliated <- biorxiv_cited[micro_affiliated,]
-cites_2015 <- grep("2015", biorxiv_cited_affiliated$year_month)
+biorxiv_cited_affiliated <- biorxiv_cited[biorxiv_cited$is_microbiology | biorxiv_cited$category == "Microbiology",]
+cites_2015 <- grep("201[45]", biorxiv_cited_affiliated$year_month)
 biorxiv_cited_affiliated_2015 <-  biorxiv_cited_affiliated[cites_2015, "times.cited"]
 
 asm_cited <- read.csv("data/wos_counts/asm_wos.csv", stringsAsFactors=F)
@@ -142,7 +142,7 @@ citation_plot <- source_citations %>%
 											scale_x_continuous(expand = c(0.02, 0), limits=c(0,80)) +
 											scale_fill_manual(breaks=names(j), labels=plot_labels, values=paste0("#", team_colors("Chicago Cubs")), name=NULL)+
 											scale_color_manual(breaks=names(j), labels=plot_labels, values=paste0("#", team_colors("Chicago Cubs")), name=NULL)+
-											labs(x="Number of Citations", y="Number of Papers\nPublished in 2015") +
+											labs(x="Number of Citations", y="Number of Papers\nPublished in 2014/2015") +
  											my_theme +
  											theme(legend.position = c(0.8,0.9))
 
