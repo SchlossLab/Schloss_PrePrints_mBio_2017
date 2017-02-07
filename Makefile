@@ -66,11 +66,19 @@ data/wos_counts/biorxiv_wos.csv : data/processed/biorxiv_data_summary.tsv code/g
 
 ##########################################################################################
 
+figures/figure1.* : data/processed/biorxiv_data_summary.tsv\
+							data/asm_altmetric/altmetric_summary.tsv\
+							data/wos_counts/asm_wos.csv\
+							data/wos_counts/biorxiv_wos.csv\
+							code/build_figure1.R
+	R -e "source('code/build_figure1.R')"
 
 write.paper : data/processed/biorxiv_data_summary.tsv\
 							data/asm_altmetric/altmetric_summary.tsv\
 							data/wos_counts/asm_wos.csv\
 							data/wos_counts/biorxiv_wos.csv\
+							figures/figure1.png\
+							figures/figure1.tiff\
 							submission/Schloss_PrePrints_mBio_2017.Rmd
 	R -e "render('submission/Schloss_PrePrints_mBio_2017.Rmd', clean=FALSE)"
 	mv submission/Schloss_PrePrints_mBio_2017.utf8.md submission/Schloss_PrePrints_mBio_2017.md

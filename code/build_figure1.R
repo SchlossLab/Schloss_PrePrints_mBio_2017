@@ -59,7 +59,7 @@ time_course <- ggplot(tidied,
 													labels=c("All preprints", "Microbiology-affiliated"),
 													values=c("#002c5a", "#ffcb0b"), name=NULL)+
 			my_theme +
-			theme(legend.position = c(0.23,0.92))
+			theme(legend.position = c(0.23,0.92), axis.ticks.x=element_blank())
 
 
 ################################################################################################
