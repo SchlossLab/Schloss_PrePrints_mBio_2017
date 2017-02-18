@@ -98,8 +98,8 @@ altmetric_plot <- source_altmetric %>% #filter(source == "biorxiv") %>%
 											scale_y_continuous(expand = c(0.02, 0), limits=c(0,200)) +
 											scale_x_continuous(expand = c(0.02, 0), limits=c(0,100)) +
 											labs(x="Altmetric Impact Score", y="Number of\nPapers or Preprints") +
-											scale_fill_manual(breaks=names(j), labels=plot_labels, values=paste0("#", team_colors("Chicago Cubs")), name=NULL)+
-											scale_color_manual(breaks=names(j), labels=plot_labels, values=paste0("#", team_colors("Chicago Cubs")), name=NULL)+
+											scale_fill_manual(breaks=names(j), labels=plot_labels, values=team_colors("Chicago Cubs"), name=NULL)+
+											scale_color_manual(breaks=names(j), labels=plot_labels, values=team_colors("Chicago Cubs"), name=NULL)+
 											my_theme +
 											theme(legend.position = c(0.8,0.9))
 
@@ -140,8 +140,8 @@ citation_plot <- source_citations %>%
 											geom_vline(data=median_cites, aes(xintercept=median, color=source), size=0.5, show.legend=FALSE, alpha=0.5) +
 											scale_y_continuous(expand = c(0.02, 0), limits=c(0,100)) +
 											scale_x_continuous(expand = c(0.02, 0), limits=c(0,80)) +
-											scale_fill_manual(breaks=names(j), labels=plot_labels, values=paste0("#", team_colors("Chicago Cubs")), name=NULL)+
-											scale_color_manual(breaks=names(j), labels=plot_labels, values=paste0("#", team_colors("Chicago Cubs")), name=NULL)+
+											scale_fill_manual(breaks=names(j), labels=plot_labels, values=team_colors("Chicago Cubs"), name=NULL)+
+											scale_color_manual(breaks=names(j), labels=plot_labels, values=team_colors("Chicago Cubs"), name=NULL)+
 											labs(x="Number of Citations", y="Number of Papers\nPublished in 2014/2015") +
  											my_theme +
  											theme(legend.position = c(0.8,0.9))

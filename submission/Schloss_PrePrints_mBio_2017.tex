@@ -9,10 +9,11 @@
 \else % if luatex or xelatex
   \ifxetex
     \usepackage{mathspec}
+    \usepackage{xltxtra,xunicode}
   \else
     \usepackage{fontspec}
   \fi
-  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+  \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
   \newcommand{\euro}{€}
 \fi
 % use upquote if available, for straight quotes in verbatim environments
@@ -23,12 +24,22 @@
 \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
 }{}
 \usepackage[margin=1.0in]{geometry}
-\usepackage{hyperref}
-\PassOptionsToPackage{usenames,dvipsnames}{color} % color is loaded by hyperref
-\hypersetup{unicode=true,
+\ifxetex
+  \usepackage[setpagesize=false, % page size defined by xetex
+              unicode=false, % unicode breaks when used with xetex
+              xetex]{hyperref}
+\else
+  \usepackage[unicode=true]{hyperref}
+\fi
+\hypersetup{breaklinks=true,
+            bookmarks=true,
+            pdfauthor={},
             pdftitle={Preprinting Microbiology},
-            pdfborder={0 0 0},
-            breaklinks=true}
+            colorlinks=true,
+            citecolor=blue,
+            urlcolor=blue,
+            linkcolor=magenta,
+            pdfborder={0 0 0}}
 \urlstyle{same}  % don't use monospace font for urls
 \usepackage{graphicx,grffile}
 \makeatletter
@@ -69,7 +80,6 @@
   \date{}
   \predate{}\postdate{}
 
-
 % Redefines (sub)paragraphs to behave more like sections
 \ifx\paragraph\undefined\else
 \let\oldparagraph\paragraph
@@ -100,21 +110,11 @@
 
 \begin{center}
 \vspace{25mm}
-Patrick D. Schloss${^\dagger}$${^{,1}}$
-
-Stefano Bertuzzi${^2}$
-
-Lynn W. Enquist${^3}$
+Patrick D. Schloss${^\dagger}$
 
 \vspace{30mm}
 
-$\dagger$ To whom correspondence should be addressed: pschloss@umich.edu
-
-1 Department of Microbiology and Immunology, University of Michigan, Ann Arbor, MI
-
-2 American Society for Microbiology, Washington, DC
-
-3 Princeton Neuroscience Institute, Princeton University, Princeton, NJ
+$\dagger$ To whom correspondence should be addressed: pschloss@umich.edu; Department of Microbiology and Immunology, University of Michigan, Ann Arbor, MI
 
 \vspace{10mm}
 
@@ -142,7 +142,7 @@ emerged as a tool that a growing number of microbiologists are using to
 overcome this bottleneck and to recruit in an effective and transparent
 way a broader pool of reviewers prior to submitting to traditional
 journals. Although use of preprints is still limited in the biological
-sciences, early indications are that preprints are as robust tool that
+sciences, early indications are that preprints are a robust tool that
 can complement and enhance peer-reviewed publications. As publishing
 moves to embrace advances in internet technology, there are many
 opportunities for preprints and peer-reviewed journals to coexist in the
@@ -171,7 +171,7 @@ drawn widespread attention from biologists. Among proponents of
 \emph{arXiv}, preprints have aided in the development of research
 communication by accelerating the release of the science and helping it
 to achieve a wider audience for critique and reception (7). Considering
-the broadening adoption of preprints among microbiologists, we sought to
+the broadening adoption of preprints among microbiologists, I sought to
 explore the specific uses of and concerns regarding preprints.
 
 \textbf{\emph{Landscape of preprint servers.}} In 2013, two preprint
@@ -202,22 +202,22 @@ under the Creative Commons Attribution License (CC-BY) and
 or with no permission for reuse. This can be relevant for authors hoping
 to submit their work to a journal as journals will not consider
 manuscripts posted as preprints under a CC-BY license (e.g.
-\emph{Proceedings of the National Academy of Sciences}). We particularly
-like the \emph{bioRxiv} licensing flexibility, which empowers authors to
-choose the model that best suits them, while ensuring the rapid posting
-of their research resultsl however, it is important to provide clear
-information to authors on the legal and practical tradeoffs of each
-option. A cosmetic, but still relevant difference between the two is the
-layout and feel of the two websites. Compared to the \emph{bioRxiv}
-site, the \emph{PeerJ Preprint} site is more fluid, gives readers the
-ability to ``follow'' a preprint, and provides better access to article
-keywords and the ability to search preprints. With broader acceptance of
-preprints by traditional journals, many journals, including all of the
-ASM journals, have established mechanisms to directly submit manuscripts
-that are posted as preprints on \emph{bioRxiv}. It is only possible to
-transfer a \emph{PeerJ Preprint} for submission to \emph{PeerJ}. In many
-ways, preprint servers have taken on the feel of a journal. As adoption
-of this approach expands, it is likely that the features of these sites
+\emph{Proceedings of the National Academy of Sciences}). The flexibility
+of the \emph{bioRxiv} licensing empowers authors to choose the model
+that best suits them, while ensuring the rapid posting of their research
+results however, it is important to provide clear information to authors
+on the legal and practical tradeoffs of each option. A cosmetic, but
+still relevant difference between the two is the layout and feel of the
+two websites. Compared to the \emph{bioRxiv} site, the \emph{PeerJ
+Preprint} site is more fluid, gives readers the ability to ``follow'' a
+preprint, and provides better access to article keywords and the ability
+to search preprints. With broader acceptance of preprints by traditional
+journals, many journals, including all of the ASM journals, have
+established mechanisms to directly submit manuscripts that are posted as
+preprints on \emph{bioRxiv}. It is only possible to transfer a
+\emph{PeerJ Preprint} for submission to \emph{PeerJ}. In many ways,
+preprint servers have taken on the feel of a journal. As adoption of
+this approach expands, it is likely that the features of these sites
 will continue to improve. It is also likely that interfaces from
 third-parties will improve. For example, although Google Scholar
 includes preprints hosted at \emph{bioRxiv} and \emph{PeerJ Preprints}
@@ -225,12 +225,12 @@ in their search results, PubMed and Web of Science do not. There is also
 hope that the National Institutes of Health (NIH) will renew their
 interest in indexing preprints as separate research products than
 peer-reviewed publications. As preprint servers begin to look and act
-like traditional journals by incorporating features and interfaces, we
-think that it is important to value the strength of the preprint - that
-of an interim research product, nimble and quickly posted. It is
-therefore essential to balance the requirements placed on authors for
-features associated with preprints with the current desirable efficiency
-of the preprint format.
+like traditional journals by incorporating features and interfaces, it
+is important to value the strength of the preprint - that of an interim
+research product, nimble and quickly posted. It is therefore essential
+to balance the requirements placed on authors for features associated
+with preprints with the current desirable efficiency of the preprint
+format.
 
 \textbf{\emph{Specific challenges for microbiology.}} Although preprints
 offer an efficient and novel venue for disseminating microbiology
@@ -349,7 +349,7 @@ grant proposal. Given the length limitations placed on grant proposals
 by funding agencies, there is a push to cite previous work to indicate a
 research team's competence in an area or to provide preliminary data.
 Some fear that the use of preprints will allow scientists to circumvent
-page limits by posting preliminary manuscripts. We would hope that both
+page limits by posting preliminary manuscripts. I would hope that both
 consumers of preprints and grant proposal reviewers would be able to
 differentiate between someone trying to game the system and someone that
 is using preprints as a mechanism to improve their science. This would
@@ -453,8 +453,8 @@ the infamous ``Arsenic Life'' paper (32) would have been different had
 they initially been posted as preprints.
 
 \textbf{\emph{Metrics for microbiology-affiliated preprints.}} To
-analyze the use of preprints, we downloaded the \emph{bioRxiv} on
-December 31, 2016. We chose to analyze \emph{bioRxiv} preprints because
+analyze the use of preprints, I downloaded the \emph{bioRxiv} on
+December 31, 2016. I chose to analyze \emph{bioRxiv} preprints because
 these preprints are amenable for submission to ASM journals and there
 were 7,434 \emph{bioRxiv} preprints compared to the 2,650 available at
 \emph{PeerJ Preprint}. Among the 7,434 preprints on bioRxiv, 329 were
@@ -463,12 +463,12 @@ of the \emph{bioRxiv} interface is the inability to assign manuscripts
 to multiple categories or to tag the content of the preprint. For
 example, this manuscript could be assigned to either the Microbiology or
 the Scientific Communication and Education categories. To counter this
-limitation, we developed a more permissive approach that classified
+limitation, I developed a more permissive approach that classified
 preprints as being microbiology-affiliated if their title or abstract
 had words containing \emph{yeast}, \emph{fung}, \emph{viral},
 \emph{virus}, \emph{archaea}, \emph{bacteri}, \emph{microb},
-\emph{microorganism}, or \emph{pathogen}. We identified 1,228 additional
-manuscripts that we considered microbiology-affiliated. These
+\emph{microorganism}, or \emph{pathogen}. I identified 1,228 additional
+manuscripts that I considered microbiology-affiliated. These
 microbiology-affiliated preprints were primarily assigned to the
 Evolutionary Biology (N=221), Genomics (N=184), or Bioinformatics
 (N=182) categories.
@@ -497,35 +497,35 @@ scientific process. Among the microbiology-affiliated preprints, 146
 than three times using the \emph{bioRxiv}-hosted commenting feature.
 Although the hosted commenting is only one mechanism for peer review,
 this result was somewhat disturbing since the preprint model implicitly
-depends on people's willingness to offer others feedback. We understand
-that it is not in the tradition of the scientific community to comment
-publicly online about colleagues' research results. We think this will
-change given the possibilities of new media, and possibly incentives for
-open commenting and reviewing could shift the trend. Importantly,
-authors do appear to be incorporating feedback from colleagues or
-editorial insights from journals as 404 (25.8\%) of preprints were
-revised at least once. Among the preprints posted prior to January 1,
-2016, 31.6\% of the Microbiology category preprints, 35.1\% of the
-microbiology-affiliated preprints, and 33.8\% of all preprints have been
-published. As noted above, not all authors submit their preprints to
-journals. This would indicate that the ``acceptance rates'' are actually
-higher. Regardless, considering that these acceptance rates are higher
-than many peer-reviewed journals (e.g.~approximately 20\% at ASM
-Journals), these results dispel the critique that preprints represent
-overly preliminary research.
+depends on people's willingness to offer others feedback. Although it is
+not in the tradition of the scientific community to comment publicly
+online about colleagues' research results, I am optimistic that this
+will change given the possibilities of new media, and possibly
+incentives for open commenting and reviewing could shift the trend.
+Importantly, authors do appear to be incorporating feedback from
+colleagues or editorial insights from journals as 404 (25.8\%) of
+preprints were revised at least once. Among the preprints posted prior
+to January 1, 2016, 31.6\% of the Microbiology category preprints,
+35.1\% of the microbiology-affiliated preprints, and 33.8\% of all
+preprints have been published. As noted above, not all authors submit
+their preprints to journals. This would indicate that the ``acceptance
+rates'' are actually higher. Regardless, considering that these
+acceptance rates are higher than many peer-reviewed journals
+(e.g.~approximately 20\% at ASM Journals), these results dispel the
+critique that preprints represent overly preliminary research.
 
 Measuring the impact and significance of scientific research is
-notoriously difficult. Using several metrics we sought to quantify the
+notoriously difficult. Using several metrics I sought to quantify the
 effect that broadly defined microbiology-affiliated preprints have had
 on the work of others. Using the download statistics associated with
-each preprint, we found that the median number of times an abstract or
+each preprint, I found that the median number of times an abstract or
 PDF had been accessed was 923 (IQR: 603 to 1445) and 303 (IQR: 167 to
 568), respectively. These values represent two aspects of posting a
 preprint. First, they reflect the number of times people were able to
 access science before it was published. Second, they reflect the number
 of times people were able to access a version of a manuscript that is
 published behind a paywall. To obtain a measure of a preprint's ability
-to garner attention and engage the public, we obtained the Altmetric
+to garner attention and engage the public, I obtained the Altmetric
 Attention Score for each preprint (\textbf{Figure 1B}). The Altmetric
 Attention Score measures the number of times a preprint or paper is
 mentioned in social media, traditional media, Wikipedia, policy
@@ -539,9 +539,9 @@ Score for articles published in \emph{mBio} published since 2013 was 4.5
 Altmetric Attention Score for preprints posted at \emph{bioRxiv} ranks
 at the 86 percentile (IQR: 66 to 94. A more traditional and
 controversial metric of impact has been the number of citations an
-article receives. We obtained the number of citations for the published
+article receives. I obtained the number of citations for the published
 versions of manuscripts that were initially posted as preprints. To
-allow for a comparison to traditional journals, we considered the
+allow for a comparison to traditional journals, I considered the
 citations for preprints published in 2014 and 2015 as aggregated by Web
 of Science (\textbf{Figure 1C}). Among the preprints that were published
 and could be found in the Web of Science database, the median number of
@@ -560,12 +560,12 @@ long period before it is finally published. In contrast, an author can
 post the preprint at the start of the process for others to consume and
 comment on as it works its way through the editorial process. A first
 example illustrates the utility of preprints for improving access to
-research and the quality of its reporting. In 2014, the Schloss
-laboratory posted a preprint to \emph{PeerJ Preprints} describing a
-method of sequencing 16S rRNA gene sequences using the Pacific
-Biosciences sequencing platform (34). At the same time, they submitted
-the manuscript for review at \emph{PeerJ}. While the manuscript was
-under review, they received feedback from an academic scientist and from
+research and the quality of its reporting. In 2014, my research group
+posted a preprint to \emph{PeerJ Preprints} describing a method of
+sequencing 16S rRNA gene sequences using the Pacific Biosciences
+sequencing platform (34). At the same time, they submitted the
+manuscript for review at \emph{PeerJ}. While the manuscript was under
+review, they received feedback from an academic scientist and from
 scientists at Pacific Biosciences that the impact of the results could
 be enhanced by using a recently released version of the sequencing
 chemistry. Instead of ignoring this feedback and resubmitting the
@@ -581,30 +581,30 @@ able to sidestep lengthy review processes by immediately making our
 results available; in one case our preprint was available 7 months ahead
 of the final published version (37, 38). As a second example, this
 manuscript was posted to \emph{bioRxiv} as a preprint on
-\textbf{February XX, 2017}. We then solicited feedback on the manuscript
-using social media. Two weeks later, we incorporated the comments and
+\textbf{February XX, 2017}. I then solicited feedback on the manuscript
+using social media. Two weeks later, I incorporated the comments and
 posted a revised preprint and submitted the manuscript to \emph{mBio}.
 During that time, the abstract was read \textbf{XXXX} times and the PDF
 was accessed \textbf{XXXX} times. This process engaged \textbf{XXXX}
 commenters on \emph{bioRxiv}, \textbf{XXXX} people on Twitter,
-\textbf{XXXX} on Facebook, and \textbf{XXXX} via email. We received
+\textbf{XXXX} on Facebook, and \textbf{XXXX} via email. I received
 useful feedback from \textbf{XXX} people. Compared to the two or three
 scientists that typically review a manuscript, this experience engaged a
-much larger and more diverse community than had we foregone the posting
+much larger and more diverse community than had I foregone the posting
 of a preprint. Although there are concerns regarding the quality of the
-science posted to a preprint server, we contend that responsible use of
+science posted to a preprint server, I contend that responsible use of
 preprints as a part of the scientific process can significantly enhance
 the science.
 
 \textbf{\emph{Preprints from a publisher's perspective.}} A lingering
 question is what role traditional journals will have in disseminating
-research if there is broad adoption of preprints. We think that edited
-peer-reviewed journals offer, and will continue to offer significant
-added value to a publication. A scholarly publishing ecosystem in which
-preprints coexist with journals will allow authors to gain value from
-the immediate communication of their work associated with preprints and
-also benefit from the peer-reviewed, professionally edited publication
-that publishers can provide. The professional copyediting, layout, and
+research if there is broad adoption of preprints. Edited peer-reviewed
+journals offer and will continue to offer significant added value to a
+publication. A scholarly publishing ecosystem in which preprints coexist
+with journals will allow authors to gain value from the immediate
+communication of their work associated with preprints and also benefit
+from the peer-reviewed, professionally edited publication that
+publishers can provide. The professional copyediting, layout, and
 publicity that these publishers offer are also unique features of
 traditional journals. An alternative perspective is that preprints will
 eventually replace traditional journals. Certainly, this is a radical
@@ -623,24 +623,25 @@ editorial decision is rendered within five days and publication in
 \emph{mSphere} within a month (39). ASM is developing a new platform,
 MicroNow, which will help coalesce specific communities within the
 microbial sciences, further enhancing the use of preprints as well as
-published articles. In addition to integrating preprints into the
-traditional editorial process, several professional societies have also
-explicitly supported citation of preprints in their other publications
-and recognize the priority of preprints in the literature (14--16).
-These are policies that empower authors and make specific journals more
-attractive. Other practices have great potential to improve the
-reputation of journals. As measured above, preprints are able to garner
-attention on par with papers published in highly selective microbiology
-journals. Thus, it is in a journal's best interest to recruit these
-preprints to their journals. Several journals including \emph{PLOS
-Genetics} and \emph{Genome Biology} have publicly stated that they scout
-preprints for this purpose (40, 41). Preprints can also be viewed as a
-lost opportunity to journals. A preprint that garners significant
-attention may be ignored when it is finally published, brining little
-additional attention to the journal. Going forward, it will be
-interesting to see the innovative approaches that publishers develop so
-that they can benefit by incorporating preprints into their process and
-whether publishers' influence is reduced by the widespread adoption of
+published articles (Stefano Bertuzzi, personal communication). In
+addition to integrating preprints into the traditional editorial
+process, several professional societies have also explicitly supported
+citation of preprints in their other publications and recognize the
+priority of preprints in the literature (14--16). These are policies
+that empower authors and make specific journals more attractive. Other
+practices have great potential to improve the reputation of journals. As
+measured above, preprints are able to garner attention on par with
+papers published in highly selective microbiology journals. Thus, it is
+in a journal's best interest to recruit these preprints to their
+journals. Several journals including \emph{PLOS Genetics} and
+\emph{Genome Biology} have publicly stated that they scout preprints for
+this purpose (40, 41). Preprints can also be viewed as a lost
+opportunity to journals. A preprint that garners significant attention
+may be ignored when it is finally published, brining little additional
+attention to the journal. Going forward, it will be interesting to see
+the innovative approaches that publishers develop so that they can
+benefit by incorporating preprints into their process and whether
+publishers' influence is reduced by the widespread adoption of
 preprints.
 
 \textbf{\emph{Conclusions.}} An increasing number of microbiologists are
@@ -655,16 +656,17 @@ science.
 
 \subsection{Acknowledgements}\label{acknowledgements}
 
-This work was supported in part by funding to PDS from the National
-Institutes of Health (P30DK034933). We appreciate the support of
-Altmetric, Inc and Thompson Reuters who provided advanced programming
-interface (API) access to their databases. The workflow utilized
-commands in GNU make (v.3.81), GNU bash (v.4.1.2), and R (v.3.3.2).
-Within R we utilized the cowplot (v.0.6.3), dplyr (v.0.5.0), ggplot2
-(v.2.2.0.9000), httr (v.1.2.1), RCurl (v.1.95-4.8), rentrez (v.1.0.4),
-rjson (v.0.2.15), rvest (v.0.3.2.9000), sportcolors (v.0.0.1), and tidyr
-(v.0.6.0) packages. A reproducible version of this manuscript and
-analysis is available at
+I am grateful to Stefano Bertuzzi and Lynn Enquist for their helpful
+comments on earlier versions of this manuscript. This work was supported
+in part by funding to PDS from the National Institutes of Health
+(P30DK034933). I appreciate the support of Altmetric, Inc and Thompson
+Reuters who provided advanced programming interface (API) access to
+their databases. The workflow utilized commands in GNU make (v.3.81),
+GNU bash (v.4.1.2), and R (v.3.3.2). Within R I utilized the cowplot
+(v.0.6.9990), dplyr (v.0.5.0), ggplot2 (v.2.1.0.9001), httr (v.1.2.1),
+RCurl (v.1.95-4.8), rentrez (v.1.0.4), rjson (v.0.2.15), rvest
+(v.0.3.2), sportcolors (v.0.0.1), and tidyr (v.0.6.0) packages. A
+reproducible version of this manuscript and analysis is available at
 \url{http://www.github.com/SchlossLab/Schloss_PrePrints_mBio_2017}.
 
 \newpage
@@ -687,23 +689,23 @@ median number of citations.
 
 \newpage
 
+\hyperdef{}{references}{\label{references}}
 \subsection*{References}\label{references}
 \addcontentsline{toc}{subsection}{References}
 
-\hypertarget{refs}{}
-\hypertarget{ref-Vale2015}{}
+\hyperdef{}{ref-Vale2015}{\label{ref-Vale2015}}
 1. \textbf{Vale RD}. 2015. Accelerating scientific publication in
 biology. Proceedings of the National Academy of Sciences
 \textbf{112}:13439--13446.
-doi:\href{https://doi.org/10.1073/pnas.1511912112}{10.1073/pnas.1511912112}.
+doi:\url{http://doi.org/10.1073/pnas.1511912112}.
 
-\hypertarget{ref-DesjardinsProulx2013}{}
+\hyperdef{}{ref-DesjardinsProulx2013}{\label{ref-DesjardinsProulx2013}}
 2. \textbf{Desjardins-Proulx P}, \textbf{White EP}, \textbf{Adamson JJ},
 \textbf{Ram K}, \textbf{Poisot T}, \textbf{Gravel D}. 2013. The case for
 open preprints in biology. PLoS Biology \textbf{11}:e1001563.
-doi:\href{https://doi.org/10.1371/journal.pbio.1001563}{10.1371/journal.pbio.1001563}.
+doi:\url{http://doi.org/10.1371/journal.pbio.1001563}.
 
-\hypertarget{ref-Berg2016}{}
+\hyperdef{}{ref-Berg2016}{\label{ref-Berg2016}}
 3. \textbf{Berg JM}, \textbf{Bhalla N}, \textbf{Bourne PE},
 \textbf{Chalfie M}, \textbf{Drubin DG}, \textbf{Fraser JS},
 \textbf{Greider CW}, \textbf{Hendricks M}, \textbf{Jones C},
@@ -713,83 +715,80 @@ doi:\href{https://doi.org/10.1371/journal.pbio.1001563}{10.1371/journal.pbio.100
 \textbf{Stebbins M}, \textbf{Strasser C}, \textbf{Swaminathan S},
 \textbf{Turner P}, \textbf{Vale RD}, \textbf{VijayRaghavan K},
 \textbf{Wolberger C}. 2016. Preprints for the life sciences. Science
-\textbf{352}:899--901.
-doi:\href{https://doi.org/10.1126/science.aaf9133}{10.1126/science.aaf9133}.
+\textbf{352}:899--901. doi:\url{http://doi.org/10.1126/science.aaf9133}.
 
-\hypertarget{ref-Bhalla2016}{}
+\hyperdef{}{ref-Bhalla2016}{\label{ref-Bhalla2016}}
 4. \textbf{Bhalla N}. 2016. Has the time come for preprints in biology?
 Molecular Biology of the Cell \textbf{27}:1185--1187.
-doi:\href{https://doi.org/10.1091/mbc.e16-02-0123}{10.1091/mbc.e16-02-0123}.
+doi:\url{http://doi.org/10.1091/mbc.e16-02-0123}.
 
-\hypertarget{ref-Nature1966}{}
+\hyperdef{}{ref-Nature1966}{\label{ref-Nature1966}}
 5. 1966. Preprints galore. Nature \textbf{211}:897--898.
-doi:\href{https://doi.org/10.1038/211897a0}{10.1038/211897a0}.
+doi:\url{http://doi.org/10.1038/211897a0}.
 
-\hypertarget{ref-Ginsparg2011}{}
+\hyperdef{}{ref-Ginsparg2011}{\label{ref-Ginsparg2011}}
 6. \textbf{Ginsparg P}. 2011. ArXiv at 20. Nature \textbf{476}:145--147.
-doi:\href{https://doi.org/10.1038/476145a}{10.1038/476145a}.
+doi:\url{http://doi.org/10.1038/476145a}.
 
-\hypertarget{ref-Shuai2012}{}
+\hyperdef{}{ref-Shuai2012}{\label{ref-Shuai2012}}
 7. \textbf{Shuai X}, \textbf{Pepe A}, \textbf{Bollen J}. 2012. How the
 scientific community reacts to newly submitted preprints: Article
 downloads, twitter mentions, and citations. PLoS ONE \textbf{7}:e47523.
-doi:\href{https://doi.org/10.1371/journal.pone.0047523}{10.1371/journal.pone.0047523}.
+doi:\url{http://doi.org/10.1371/journal.pone.0047523}.
 
-\hypertarget{ref-Callaway2013}{}
+\hyperdef{}{ref-Callaway2013}{\label{ref-Callaway2013}}
 8. \textbf{Callaway E}. 2013. Biomedical journal and publisher hope to
 bring preprints to life. Nature Medicine \textbf{19}:512--512.
-doi:\href{https://doi.org/10.1038/nm0513-512}{10.1038/nm0513-512}.
+doi:\url{http://doi.org/10.1038/nm0513-512}.
 
-\hypertarget{ref-PreprintPolicy}{}
+\hyperdef{}{ref-PreprintPolicy}{\label{ref-PreprintPolicy}}
 9. List of academic journals by preprint policy.
 \url{https://en.wikipedia.org/wiki/List_of_academic_journals_by_preprint_policy}.
 
-\hypertarget{ref-Sherpa}{}
+\hyperdef{}{ref-Sherpa}{\label{ref-Sherpa}}
 10. Publisher copyright policies \& self-archiving.
 \url{http://www.sherpa.ac.uk/romeo/index.php}.
 
-\hypertarget{ref-Drubin2016}{}
+\hyperdef{}{ref-Drubin2016}{\label{ref-Drubin2016}}
 11. \textbf{Drubin DG}. 2016. The mismeasure of scientific research
 articles and why MBoC quickly embraced preprints. Molecular Biology of
 the Cell \textbf{27}:3181--3182.
-doi:\href{https://doi.org/10.1091/mbc.e16-09-0651}{10.1091/mbc.e16-09-0651}.
+doi:\url{http://doi.org/10.1091/mbc.e16-09-0651}.
 
-\hypertarget{ref-Spier2002}{}
+\hyperdef{}{ref-Spier2002}{\label{ref-Spier2002}}
 12. \textbf{Spier R}. 2002. The history of the peer-review process.
 Trends in Biotechnology \textbf{20}:357--358.
-doi:\href{https://doi.org/10.1016/s0167-7799(02)01985-6}{10.1016/s0167-7799(02)01985-6}.
+doi:\url{http://doi.org/10.1016/s0167-7799(02)01985-6}.
 
-\hypertarget{ref-Burnham1990}{}
+\hyperdef{}{ref-Burnham1990}{\label{ref-Burnham1990}}
 13. \textbf{Burnham JC}. 1990. The evolution of editorial peer review.
 JAMA: The Journal of the American Medical Association \textbf{263}:1323.
-doi:\href{https://doi.org/10.1001/jama.1990.03440100023003}{10.1001/jama.1990.03440100023003}.
+doi:\url{http://doi.org/10.1001/jama.1990.03440100023003}.
 
-\hypertarget{ref-Pulverer2016}{}
+\hyperdef{}{ref-Pulverer2016}{\label{ref-Pulverer2016}}
 14. \textbf{Pulverer B}. 2016. Preparing for preprints. The EMBO Journal
 \textbf{35}:2617--2619.
-doi:\href{https://doi.org/10.15252/embj.201670030}{10.15252/embj.201670030}.
+doi:\url{http://doi.org/10.15252/embj.201670030}.
 
-\hypertarget{ref-Loew2016}{}
+\hyperdef{}{ref-Loew2016}{\label{ref-Loew2016}}
 15. \textbf{Loew LM}. 2016. Peer review and bioRxiv. Biophysical Journal
 \textbf{111}:E01--E02.
-doi:\href{https://doi.org/10.1016/j.bpj.2016.06.035}{10.1016/j.bpj.2016.06.035}.
+doi:\url{http://doi.org/10.1016/j.bpj.2016.06.035}.
 
-\hypertarget{ref-Vale2016}{}
+\hyperdef{}{ref-Vale2016}{\label{ref-Vale2016}}
 16. \textbf{Vale RD}, \textbf{Hyman AA}. 2016. Priority of discovery in
 the life sciences. eLife \textbf{5}.
-doi:\href{https://doi.org/10.7554/elife.16931}{10.7554/elife.16931}.
+doi:\url{http://doi.org/10.7554/elife.16931}.
 
-\hypertarget{ref-Dolgin2016}{}
+\hyperdef{}{ref-Dolgin2016}{\label{ref-Dolgin2016}}
 17. \textbf{Dolgin E}. 2016. Big biology projects warm up to preprints.
-Nature.
-doi:\href{https://doi.org/10.1038/nature.2016.21074}{10.1038/nature.2016.21074}.
+Nature. doi:\url{http://doi.org/10.1038/nature.2016.21074}.
 
-\hypertarget{ref-SinghChawla2017}{}
+\hyperdef{}{ref-SinghChawla2017}{\label{ref-SinghChawla2017}}
 18. \textbf{Chawla DS}. 2017. When a preprint becomes the final paper.
-Nature.
-doi:\href{https://doi.org/10.1038/nature.2017.21333}{10.1038/nature.2017.21333}.
+Nature. doi:\url{http://doi.org/10.1038/nature.2017.21333}.
 
-\hypertarget{ref-Afshinnekoo2015a}{}
+\hyperdef{}{ref-Afshinnekoo2015a}{\label{ref-Afshinnekoo2015a}}
 19. \textbf{Afshinnekoo E}, \textbf{Meydan C}, \textbf{Chowdhury S},
 \textbf{Jaroudi D}, \textbf{Boyer C}, \textbf{Bernstein N},
 \textbf{Maritz JM}, \textbf{Reeves D}, \textbf{Gandara J},
@@ -806,24 +805,21 @@ TR}, \textbf{Paolantonio KS}, \textbf{Alter E}, \textbf{Schadt EE},
 \textbf{Garbarino J}, \textbf{Prill RJ}, \textbf{Carlton JM},
 \textbf{Levy S}, \textbf{Mason CE}. 2015. Geospatial resolution of human
 and bacterial diversity with city-scale metagenomics. Cell Systems
-\textbf{1}:72--87.
-doi:\href{https://doi.org/10.1016/j.cels.2015.01.001}{10.1016/j.cels.2015.01.001}.
+\textbf{1}:72--87. doi:\url{http://doi.org/10.1016/j.cels.2015.01.001}.
 
-\hypertarget{ref-Petit2015}{}
+\hyperdef{}{ref-Petit2015}{\label{ref-Petit2015}}
 20. \textbf{Petit III RA}, \textbf{Ezewudo M}, \textbf{Joseph SJ},
 \textbf{Read TD}. 2015. Searching for anthrax in the New York City
-subway metagenome.
-doi:\href{https://doi.org/10.5281/zenodo.17158}{10.5281/zenodo.17158}.
+subway metagenome. doi:\url{http://doi.org/10.5281/zenodo.17158}.
 
-\hypertarget{ref-Ackelsberg2015}{}
+\hyperdef{}{ref-Ackelsberg2015}{\label{ref-Ackelsberg2015}}
 21. \textbf{Ackelsberg J}, \textbf{Rakeman J}, \textbf{Hughes S},
 \textbf{Petersen J}, \textbf{Mead P}, \textbf{Schriefer M},
 \textbf{Kingry L}, \textbf{Hoffmaster A}, \textbf{Gee JE}. 2015. Lack of
 evidence for plague or anthrax on the new york city subway. Cell Systems
-\textbf{1}:4--5.
-doi:\href{https://doi.org/10.1016/j.cels.2015.07.008}{10.1016/j.cels.2015.07.008}.
+\textbf{1}:4--5. doi:\url{http://doi.org/10.1016/j.cels.2015.07.008}.
 
-\hypertarget{ref-Afshinnekoo2015b}{}
+\hyperdef{}{ref-Afshinnekoo2015b}{\label{ref-Afshinnekoo2015b}}
 22. \textbf{Afshinnekoo E}, \textbf{Meydan C}, \textbf{Chowdhury S},
 \textbf{Jaroudi D}, \textbf{Boyer C}, \textbf{Bernstein N},
 \textbf{Maritz JM}, \textbf{Reeves D}, \textbf{Gandara J},
@@ -840,9 +836,9 @@ TR}, \textbf{Paolantonio KS}, \textbf{Alter E}, \textbf{Schadt EE},
 \textbf{Garbarino J}, \textbf{Prill RJ}, \textbf{Carlton JM},
 \textbf{Levy S}, \textbf{Mason CE}. 2015. Modern methods for delineating
 metagenomic complexity. Cell Systems \textbf{1}:6--7.
-doi:\href{https://doi.org/10.1016/j.cels.2015.07.007}{10.1016/j.cels.2015.07.007}.
+doi:\url{http://doi.org/10.1016/j.cels.2015.07.007}.
 
-\hypertarget{ref-Boothby2015}{}
+\hyperdef{}{ref-Boothby2015}{\label{ref-Boothby2015}}
 23. \textbf{Boothby TC}, \textbf{Tenlen JR}, \textbf{Smith FW},
 \textbf{Wang JR}, \textbf{Patanella KA}, \textbf{Nishimura EO},
 \textbf{Tintori SC}, \textbf{Li Q}, \textbf{Jones CD}, \textbf{Yandell
@@ -850,122 +846,120 @@ M}, \textbf{Messina DN}, \textbf{Glasscock J}, \textbf{Goldstein B}.
 2015. Evidence for extensive horizontal gene transfer from the draft
 genome of a tardigrade. Proceedings of the National Academy of Sciences
 \textbf{112}:15976--15981.
-doi:\href{https://doi.org/10.1073/pnas.1510461112}{10.1073/pnas.1510461112}.
+doi:\url{http://doi.org/10.1073/pnas.1510461112}.
 
-\hypertarget{ref-Koutsovoulos2016a}{}
+\hyperdef{}{ref-Koutsovoulos2016a}{\label{ref-Koutsovoulos2016a}}
 24. \textbf{Koutsovoulos G}, \textbf{Kumar S}, \textbf{Laetsch DR},
 \textbf{Stevens L}, \textbf{Daub J}, \textbf{Conlon C}, \textbf{Maroon
 H}, \textbf{Thomas F}, \textbf{Aboobaker A}, \textbf{Blaxter M}. 2016.
 No evidence for extensive horizontal gene transfer in the genome of the
 tardigrade hypsibius dujardini. bioRxiv 033464.
-doi:\href{https://doi.org/10.1101/033464}{10.1101/033464}.
+doi:\url{http://doi.org/10.1101/033464}.
 
-\hypertarget{ref-Boothby2016}{}
+\hyperdef{}{ref-Boothby2016}{\label{ref-Boothby2016}}
 25. \textbf{Boothby TC}, \textbf{Goldstein B}. 2016. Reply to bemm et
 al. and arakawa: Identifying foreign genes in independentHypsibius
 dujardinigenome assemblies. Proceedings of the National Academy of
 Sciences \textbf{113}:E3058--E3061.
-doi:\href{https://doi.org/10.1073/pnas.1601149113}{10.1073/pnas.1601149113}.
+doi:\url{http://doi.org/10.1073/pnas.1601149113}.
 
-\hypertarget{ref-Koutsovoulos2016b}{}
+\hyperdef{}{ref-Koutsovoulos2016b}{\label{ref-Koutsovoulos2016b}}
 26. \textbf{Koutsovoulos G}, \textbf{Kumar S}, \textbf{Laetsch DR},
 \textbf{Stevens L}, \textbf{Daub J}, \textbf{Conlon C}, \textbf{Maroon
 H}, \textbf{Thomas F}, \textbf{Aboobaker AA}, \textbf{Blaxter M}. 2016.
 No evidence for extensive horizontal gene transfer in the genome of the
 tardigradeHypsibius dujardini. Proceedings of the National Academy of
 Sciences \textbf{113}:5053--5058.
-doi:\href{https://doi.org/10.1073/pnas.1600338113}{10.1073/pnas.1600338113}.
+doi:\url{http://doi.org/10.1073/pnas.1600338113}.
 
-\hypertarget{ref-Bemm2016}{}
+\hyperdef{}{ref-Bemm2016}{\label{ref-Bemm2016}}
 27. \textbf{Bemm F}, \textbf{Weiß CL}, \textbf{Schultz J},
 \textbf{Förster F}. 2016. Genome of a tardigrade: Horizontal gene
 transfer or bacterial contamination? Proceedings of the National Academy
 of Sciences \textbf{113}:E3054--E3056.
-doi:\href{https://doi.org/10.1073/pnas.1525116113}{10.1073/pnas.1525116113}.
+doi:\url{http://doi.org/10.1073/pnas.1525116113}.
 
-\hypertarget{ref-Arakawa2016}{}
+\hyperdef{}{ref-Arakawa2016}{\label{ref-Arakawa2016}}
 28. \textbf{Arakawa K}. 2016. No evidence for extensive horizontal gene
 transfer from the draft genome of a tardigrade. Proceedings of the
 National Academy of Sciences \textbf{113}:E3057--E3057.
-doi:\href{https://doi.org/10.1073/pnas.1602711113}{10.1073/pnas.1602711113}.
+doi:\url{http://doi.org/10.1073/pnas.1602711113}.
 
-\hypertarget{ref-Delmont2016}{}
+\hyperdef{}{ref-Delmont2016}{\label{ref-Delmont2016}}
 29. \textbf{Delmont TO}, \textbf{Eren AM}. 2016. Identifying
 contamination with advanced visualization and analysis practices:
 Metagenomic approaches for eukaryotic genome assemblies.
-doi:\href{https://doi.org/10.7287/peerj.preprints.1695v1}{10.7287/peerj.preprints.1695v1}.
+doi:\url{http://doi.org/10.7287/peerj.preprints.1695v1}.
 
-\hypertarget{ref-Bik2016a}{}
+\hyperdef{}{ref-Bik2016a}{\label{ref-Bik2016a}}
 30. \textbf{Bik EM}, \textbf{Casadevall A}, \textbf{Fang FC}. 2016. The
 prevalence of inappropriate image duplication in biomedical research
-publications. bioRxiv 049452.
-doi:\href{https://doi.org/10.1101/049452}{10.1101/049452}.
+publications. bioRxiv 049452. doi:\url{http://doi.org/10.1101/049452}.
 
-\hypertarget{ref-Bik2016b}{}
+\hyperdef{}{ref-Bik2016b}{\label{ref-Bik2016b}}
 31. \textbf{Bik EM}, \textbf{Casadevall A}, \textbf{Fang FC}. 2016. The
 prevalence of inappropriate image duplication in biomedical research
 publications. mBio \textbf{7}:e00809--16.
-doi:\href{https://doi.org/10.1128/mbio.00809-16}{10.1128/mbio.00809-16}.
+doi:\url{http://doi.org/10.1128/mbio.00809-16}.
 
-\hypertarget{ref-WolfeSimon2010}{}
+\hyperdef{}{ref-WolfeSimon2010}{\label{ref-WolfeSimon2010}}
 32. \textbf{Wolfe-Simon F}, \textbf{Blum JS}, \textbf{Kulp TR},
 \textbf{Gordon GW}, \textbf{Hoeft SE}, \textbf{Pett-Ridge J},
 \textbf{Stolz JF}, \textbf{Webb SM}, \textbf{Weber PK}, \textbf{Davies
 PCW}, \textbf{Anbar AD}, \textbf{Oremland RS}. 2010. A bacterium that
 can grow by using arsenic instead of phosphorus. Science
 \textbf{332}:1163--1166.
-doi:\href{https://doi.org/10.1126/science.1197258}{10.1126/science.1197258}.
+doi:\url{http://doi.org/10.1126/science.1197258}.
 
-\hypertarget{ref-Altmetric}{}
+\hyperdef{}{ref-Altmetric}{\label{ref-Altmetric}}
 33. How is the Altmetric Attention Score calculated?
 \url{https://help.altmetric.com/support/solutions/articles/6000060969-how-is-the-altmetric-attention-score-calculated-}.
 
-\hypertarget{ref-Schloss2015}{}
+\hyperdef{}{ref-Schloss2015}{\label{ref-Schloss2015}}
 34. \textbf{Schloss PD}, \textbf{Westcott SL}, \textbf{Jenior ML},
 \textbf{Highlander SK}. 2015. Sequencing 16S rRNA gene fragments using
 the PacBio SMRT DNA sequencing system.
-doi:\href{https://doi.org/10.7287/peerj.preprints.778v1}{10.7287/peerj.preprints.778v1}.
+doi:\url{http://doi.org/10.7287/peerj.preprints.778v1}.
 
-\hypertarget{ref-Schloss2016a}{}
+\hyperdef{}{ref-Schloss2016a}{\label{ref-Schloss2016a}}
 35. \textbf{Schloss PD}, \textbf{Jenior ML}, \textbf{Koumpouras CC},
 \textbf{Westcott SL}, \textbf{Highlander SK}. 2016. Sequencing 16S rRNA
 gene fragments using the PacBio SMRT DNA sequencing system.
-doi:\href{https://doi.org/10.7287/peerj.preprints.778v2}{10.7287/peerj.preprints.778v2}.
+doi:\url{http://doi.org/10.7287/peerj.preprints.778v2}.
 
-\hypertarget{ref-Schloss2016b}{}
+\hyperdef{}{ref-Schloss2016b}{\label{ref-Schloss2016b}}
 36. \textbf{Schloss PD}, \textbf{Jenior ML}, \textbf{Koumpouras CC},
 \textbf{Westcott SL}, \textbf{Highlander SK}. 2016. Sequencing 16S rRNA
 gene fragments using the PacBio SMRT DNA sequencing system. PeerJ
-\textbf{4}:e1869.
-doi:\href{https://doi.org/10.7717/peerj.1869}{10.7717/peerj.1869}.
+\textbf{4}:e1869. doi:\url{http://doi.org/10.7717/peerj.1869}.
 
-\hypertarget{ref-Baxter2016a}{}
+\hyperdef{}{ref-Baxter2016a}{\label{ref-Baxter2016a}}
 37. \textbf{Baxter NT}, \textbf{Koumpouras CC}, \textbf{Rogers MA},
 \textbf{Ruffin MT}, \textbf{Schloss P}. 2016. DNA from fecal
 immunochemical test can replace stool for microbiota-based colorectal
 cancer screening. bioRxiv 048389.
-doi:\href{https://doi.org/10.1101/048389}{10.1101/048389}.
+doi:\url{http://doi.org/10.1101/048389}.
 
-\hypertarget{ref-Baxter2016b}{}
+\hyperdef{}{ref-Baxter2016b}{\label{ref-Baxter2016b}}
 38. \textbf{Baxter NT}, \textbf{Koumpouras CC}, \textbf{Rogers MAM},
 \textbf{Ruffin MT}, \textbf{Schloss PD}. 2016. DNA from fecal
 immunochemical test can replace stool for detection of colonic lesions
 using a microbiota-based model. Microbiome \textbf{4}.
-doi:\href{https://doi.org/10.1186/s40168-016-0205-y}{10.1186/s40168-016-0205-y}.
+doi:\url{http://doi.org/10.1186/s40168-016-0205-y}.
 
-\hypertarget{ref-Imperiale2016}{}
+\hyperdef{}{ref-Imperiale2016}{\label{ref-Imperiale2016}}
 39. \textbf{Imperiale MJ}, \textbf{Shenk T}, \textbf{Bertuzzi S}. 2016.
 mSphereDirect: Author-initiated peer review of manuscripts. mSphere
 \textbf{1}:e00307--16.
-doi:\href{https://doi.org/10.1128/msphere.00307-16}{10.1128/msphere.00307-16}.
+doi:\url{http://doi.org/10.1128/msphere.00307-16}.
 
-\hypertarget{ref-Vence2017}{}
+\hyperdef{}{ref-Vence2017}{\label{ref-Vence2017}}
 40. \textbf{Vence T}. 2017. Journals seek out preprints. TheScientist.
 
-\hypertarget{ref-Barsh2016}{}
+\hyperdef{}{ref-Barsh2016}{\label{ref-Barsh2016}}
 41. \textbf{Barsh GS}, \textbf{Bergman CM}, \textbf{Brown CD},
 \textbf{Singh ND}, \textbf{Copenhaver GP}. 2016. Bringing PLOS genetics
 editors to preprint servers. PLOS Genetics \textbf{12}:e1006448.
-doi:\href{https://doi.org/10.1371/journal.pgen.1006448}{10.1371/journal.pgen.1006448}.
+doi:\url{http://doi.org/10.1371/journal.pgen.1006448}.
 
 \end{document}

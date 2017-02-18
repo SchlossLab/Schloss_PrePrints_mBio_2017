@@ -66,7 +66,7 @@ data/wos_counts/biorxiv_wos.csv : data/processed/biorxiv_data_summary.tsv code/g
 
 ##########################################################################################
 
-figures/figure1.* : data/processed/biorxiv_data_summary.tsv\
+figures/figure1.% : data/processed/biorxiv_data_summary.tsv\
 							data/asm_altmetric/altmetric_summary.tsv\
 							data/wos_counts/asm_wos.csv\
 							data/wos_counts/biorxiv_wos.csv\
