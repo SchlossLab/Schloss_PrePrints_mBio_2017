@@ -78,7 +78,7 @@ write.paper : data/processed/biorxiv_data_summary.tsv\
 							data/wos_counts/asm_wos.csv\
 							data/wos_counts/biorxiv_wos.csv\
 							figures/figure1.png\
-							figures/figure1.tiff\
+							figures/figure1.eps\
 							submission/Schloss_PrePrints_mBio_2017.Rmd
 	R -e "render('submission/Schloss_PrePrints_mBio_2017.Rmd', clean=FALSE)"
 	mv submission/Schloss_PrePrints_mBio_2017.utf8.md submission/Schloss_PrePrints_mBio_2017.md
