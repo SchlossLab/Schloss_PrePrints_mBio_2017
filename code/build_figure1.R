@@ -159,5 +159,5 @@ ggdraw() +
 				theme(axis.title.y = element_text(margin = margin(r=7))),
 				x=0,y=0.0,1,0.33) +
 	draw_plot_label(c("A", "B", "C"), x=c(0,0,0), y=c(1.00,0.66,0.33), size=12) +
-	ggsave('figures/figure1.eps', width=8.4, height=14, units="cm") +
+	ggsave('figures/figure1.pdf', width=8.4, height=14, units="cm") +
 	ggsave('figures/figure1.png', width=8.4, height=14, units="cm")
