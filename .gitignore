@@ -12,3 +12,8 @@ sync_data.sh
 check_data.sh
 
 scopus.key
+
+
+
+export WOS_USER="WSMichigan_HG"
+export WOS_PASSWORD="C5TI3NL1"
