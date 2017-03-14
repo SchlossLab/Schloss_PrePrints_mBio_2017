@@ -28,7 +28,7 @@ $\dagger$ To whom correspondence should be addressed: pschloss@umich.edu; Depart
 
 \textbf{Format:} Perspective
 
-\textbf{Number of words:} \textasciitilde4500 plus references, figures, and abstract
+\textbf{Number of words:} \textasciitilde5400 plus references, figures, and abstract
 
 \end{center}
 
@@ -101,9 +101,9 @@ The professional copyediting, layout, and publicity that these publishers offer 
 
 ## Acknowledgements
 
-I am grateful to Stefano Bertuzzi and Lynn Enquist for their helpful comments on earlier versions of this manuscript and to the numerous individuals who provided feedback on the preprint version of the manuscript. This work was supported in part by funding from the National Institutes of Health (P30DK034933). I appreciate the support of Altmetric, Inc and Thompson Reuters who provided advanced programming interface (API) access to their databases. The workflow utilized commands in GNU make (v.3.81), GNU bash (v.4.1.2), and R (v.3.3.2). Within R I utilized the cowplot (v.0.6.3), dplyr (v.0.5.0),
-ggplot2 (v.2.2.0.9000), httr (v.1.2.1), RCurl (v.1.95-4.8),
-rentrez (v.1.0.4), rjson (v.0.2.15), rvest (v.0.3.2.9000), sportcolors (v.0.0.1), and tidyr (v.0.6.0) packages. A reproducible version of this manuscript and analysis is available at http://www.github.com/SchlossLab/Schloss_PrePrints_mBio_2017.
+I am grateful to Stefano Bertuzzi and Lynn Enquist for their helpful comments on earlier versions of this manuscript and to the numerous individuals who provided feedback on the preprint version of the manuscript. This work was supported in part by funding from the National Institutes of Health (P30DK034933). I appreciate the support of Altmetric, Inc and Thompson Reuters who provided advanced programming interface (API) access to their databases. The workflow utilized commands in GNU make (v.3.81), GNU bash (v.4.1.2), and R (v.3.3.2). Within R I utilized the cowplot (v.0.6.9990), dplyr (v.0.5.0),
+ggplot2 (v.2.1.0.9001), httr (v.1.2.1), RCurl (v.1.95-4.8),
+rentrez (v.1.0.4), rjson (v.0.2.15), rvest (v.0.3.2), sportcolors (v.0.0.1), and tidyr (v.0.6.0) packages. A reproducible version of this manuscript and analysis is available at http://www.github.com/SchlossLab/Schloss_PrePrints_mBio_2017.
 
 
 \newpage

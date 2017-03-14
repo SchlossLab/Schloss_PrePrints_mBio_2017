@@ -9,10 +9,12 @@
 \else % if luatex or xelatex
   \ifxetex
     \usepackage{mathspec}
+    \usepackage{xltxtra,xunicode}
   \else
     \usepackage{fontspec}
   \fi
-  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+  \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+  \newcommand{\euro}{€}
 \fi
 % use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
@@ -22,11 +24,22 @@
 \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
 }{}
 \usepackage[margin=1.0in]{geometry}
-\usepackage{hyperref}
-\hypersetup{unicode=true,
+\ifxetex
+  \usepackage[setpagesize=false, % page size defined by xetex
+              unicode=false, % unicode breaks when used with xetex
+              xetex]{hyperref}
+\else
+  \usepackage[unicode=true]{hyperref}
+\fi
+\hypersetup{breaklinks=true,
+            bookmarks=true,
+            pdfauthor={},
             pdftitle={Preprinting Microbiology},
-            pdfborder={0 0 0},
-            breaklinks=true}
+            colorlinks=true,
+            citecolor=blue,
+            urlcolor=blue,
+            linkcolor=magenta,
+            pdfborder={0 0 0}}
 \urlstyle{same}  % don't use monospace font for urls
 \usepackage{graphicx,grffile}
 \makeatletter
@@ -37,25 +50,12 @@
 % margins by default, and it is still possible to overwrite the defaults
 % using explicit options in \includegraphics[width, height, ...]{}
 \setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
-\IfFileExists{parskip.sty}{%
-\usepackage{parskip}
-}{% else
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{6pt plus 2pt minus 1pt}
-}
 \setlength{\emergencystretch}{3em}  % prevent overfull lines
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{0}
-% Redefines (sub)paragraphs to behave more like sections
-\ifx\paragraph\undefined\else
-\let\oldparagraph\paragraph
-\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
-\fi
-\ifx\subparagraph\undefined\else
-\let\oldsubparagraph\subparagraph
-\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
-\fi
 
 %%% Use protect on footnotes to avoid problems with footnotes in titles
 \let\rmarkdownfootnote\footnote%
@@ -79,6 +79,16 @@
   \preauthor{}\postauthor{}
   \date{}
   \predate{}\postdate{}
+
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
 
 \usepackage{helvet} % Helvetica font
 \renewcommand*\familydefault{\sfdefault} % Use the sans serif version of the font
@@ -110,7 +120,7 @@ $\dagger$ To whom correspondence should be addressed: pschloss@umich.edu; Depart
 
 \textbf{Format:} Perspective
 
-\textbf{Number of words:} \textasciitilde4500 plus references, figures, and abstract
+\textbf{Number of words:} \textasciitilde5400 plus references, figures, and abstract
 
 \end{center}
 
@@ -689,16 +699,14 @@ Institutes of Health (P30DK034933). I appreciate the support of
 Altmetric, Inc and Thompson Reuters who provided advanced programming
 interface (API) access to their databases. The workflow utilized
 commands in GNU make (v.3.81), GNU bash (v.4.1.2), and R (v.3.3.2).
-Within R I utilized the cowplot (v.0.6.3), dplyr (v.0.5.0), ggplot2
-(v.2.2.0.9000), httr (v.1.2.1), RCurl (v.1.95-4.8), rentrez (v.1.0.4),
-rjson (v.0.2.15), rvest (v.0.3.2.9000), sportcolors (v.0.0.1), and tidyr
+Within R I utilized the cowplot (v.0.6.9990), dplyr (v.0.5.0), ggplot2
+(v.2.1.0.9001), httr (v.1.2.1), RCurl (v.1.95-4.8), rentrez (v.1.0.4),
+rjson (v.0.2.15), rvest (v.0.3.2), sportcolors (v.0.0.1), and tidyr
 (v.0.6.0) packages. A reproducible version of this manuscript and
 analysis is available at
 \url{http://www.github.com/SchlossLab/Schloss_PrePrints_mBio_2017}.
 
 \newpage
-
-\includegraphics[width=3.5in]{../figures/figure1.png}
 
 \textbf{Figure 1. Summary of microbiology-affiliated preprints since the
 creation of} \textbf{\emph{bioRxiv.}} The total number of preprints
@@ -716,23 +724,23 @@ median number of citations.
 
 \newpage
 
+\hyperdef{}{references}{\label{references}}
 \subsection*{References}\label{references}
 \addcontentsline{toc}{subsection}{References}
 
-\hypertarget{refs}{}
-\hypertarget{ref-Vale2015}{}
+\hyperdef{}{ref-Vale2015}{\label{ref-Vale2015}}
 1. \textbf{Vale RD}. 2015. Accelerating scientific publication in
 biology. Proceedings of the National Academy of Sciences
 \textbf{112}:13439--13446.
-doi:\href{https://doi.org/10.1073/pnas.1511912112}{10.1073/pnas.1511912112}.
+doi:\url{http://doi.org/10.1073/pnas.1511912112}.
 
-\hypertarget{ref-DesjardinsProulx2013}{}
+\hyperdef{}{ref-DesjardinsProulx2013}{\label{ref-DesjardinsProulx2013}}
 2. \textbf{Desjardins-Proulx P}, \textbf{White EP}, \textbf{Adamson JJ},
 \textbf{Ram K}, \textbf{Poisot T}, \textbf{Gravel D}. 2013. The case for
 open preprints in biology. PLoS Biology \textbf{11}:e1001563.
-doi:\href{https://doi.org/10.1371/journal.pbio.1001563}{10.1371/journal.pbio.1001563}.
+doi:\url{http://doi.org/10.1371/journal.pbio.1001563}.
 
-\hypertarget{ref-Berg2016}{}
+\hyperdef{}{ref-Berg2016}{\label{ref-Berg2016}}
 3. \textbf{Berg JM}, \textbf{Bhalla N}, \textbf{Bourne PE},
 \textbf{Chalfie M}, \textbf{Drubin DG}, \textbf{Fraser JS},
 \textbf{Greider CW}, \textbf{Hendricks M}, \textbf{Jones C},
@@ -742,100 +750,97 @@ doi:\href{https://doi.org/10.1371/journal.pbio.1001563}{10.1371/journal.pbio.100
 \textbf{Stebbins M}, \textbf{Strasser C}, \textbf{Swaminathan S},
 \textbf{Turner P}, \textbf{Vale RD}, \textbf{VijayRaghavan K},
 \textbf{Wolberger C}. 2016. Preprints for the life sciences. Science
-\textbf{352}:899--901.
-doi:\href{https://doi.org/10.1126/science.aaf9133}{10.1126/science.aaf9133}.
+\textbf{352}:899--901. doi:\url{http://doi.org/10.1126/science.aaf9133}.
 
-\hypertarget{ref-Bhalla2016}{}
+\hyperdef{}{ref-Bhalla2016}{\label{ref-Bhalla2016}}
 4. \textbf{Bhalla N}. 2016. Has the time come for preprints in biology?
 Molecular Biology of the Cell \textbf{27}:1185--1187.
-doi:\href{https://doi.org/10.1091/mbc.e16-02-0123}{10.1091/mbc.e16-02-0123}.
+doi:\url{http://doi.org/10.1091/mbc.e16-02-0123}.
 
-\hypertarget{ref-Nature1966}{}
+\hyperdef{}{ref-Nature1966}{\label{ref-Nature1966}}
 5. 1966. Preprints galore. Nature \textbf{211}:897--898.
-doi:\href{https://doi.org/10.1038/211897a0}{10.1038/211897a0}.
+doi:\url{http://doi.org/10.1038/211897a0}.
 
-\hypertarget{ref-Ginsparg2011}{}
+\hyperdef{}{ref-Ginsparg2011}{\label{ref-Ginsparg2011}}
 6. \textbf{Ginsparg P}. 2011. ArXiv at 20. Nature \textbf{476}:145--147.
-doi:\href{https://doi.org/10.1038/476145a}{10.1038/476145a}.
+doi:\url{http://doi.org/10.1038/476145a}.
 
-\hypertarget{ref-Shuai2012}{}
+\hyperdef{}{ref-Shuai2012}{\label{ref-Shuai2012}}
 7. \textbf{Shuai X}, \textbf{Pepe A}, \textbf{Bollen J}. 2012. How the
 scientific community reacts to newly submitted preprints: Article
 downloads, twitter mentions, and citations. PLoS ONE \textbf{7}:e47523.
-doi:\href{https://doi.org/10.1371/journal.pone.0047523}{10.1371/journal.pone.0047523}.
+doi:\url{http://doi.org/10.1371/journal.pone.0047523}.
 
-\hypertarget{ref-Callaway2013}{}
+\hyperdef{}{ref-Callaway2013}{\label{ref-Callaway2013}}
 8. \textbf{Callaway E}. 2013. Biomedical journal and publisher hope to
 bring preprints to life. Nature Medicine \textbf{19}:512--512.
-doi:\href{https://doi.org/10.1038/nm0513-512}{10.1038/nm0513-512}.
+doi:\url{http://doi.org/10.1038/nm0513-512}.
 
-\hypertarget{ref-Angell1991}{}
+\hyperdef{}{ref-Angell1991}{\label{ref-Angell1991}}
 9. \textbf{Angell M}, \textbf{Kassirer JP}. 1991. The ingelfinger rule
 revisited. New England Journal of Medicine \textbf{325}:1371--1373.
-doi:\href{https://doi.org/10.1056/nejm199111073251910}{10.1056/nejm199111073251910}.
+doi:\url{http://doi.org/10.1056/nejm199111073251910}.
 
-\hypertarget{ref-ICMJE}{}
+\hyperdef{}{ref-ICMJE}{\label{ref-ICMJE}}
 10. Recommendations for the conduct, reporting, editing, and publication
 of scholarly work in medical journals.
 \url{http://www.icmje.org/news-and-editorials/icmje-recommendations_annotated_dec16.pdf}.
 
-\hypertarget{ref-PreprintPolicy}{}
+\hyperdef{}{ref-PreprintPolicy}{\label{ref-PreprintPolicy}}
 11. List of academic journals by preprint policy.
 \url{https://en.wikipedia.org/wiki/List_of_academic_journals_by_preprint_policy}.
 
-\hypertarget{ref-Sherpa}{}
+\hyperdef{}{ref-Sherpa}{\label{ref-Sherpa}}
 12. Publisher copyright policies \& self-archiving.
 \url{http://www.sherpa.ac.uk/romeo/index.php}.
 
-\hypertarget{ref-Drubin2016}{}
+\hyperdef{}{ref-Drubin2016}{\label{ref-Drubin2016}}
 13. \textbf{Drubin DG}. 2016. The mismeasure of scientific research
 articles and why MBoC quickly embraced preprints. Molecular Biology of
 the Cell \textbf{27}:3181--3182.
-doi:\href{https://doi.org/10.1091/mbc.e16-09-0651}{10.1091/mbc.e16-09-0651}.
+doi:\url{http://doi.org/10.1091/mbc.e16-09-0651}.
 
-\hypertarget{ref-Spier2002}{}
+\hyperdef{}{ref-Spier2002}{\label{ref-Spier2002}}
 14. \textbf{Spier R}. 2002. The history of the peer-review process.
 Trends in Biotechnology \textbf{20}:357--358.
-doi:\href{https://doi.org/10.1016/s0167-7799(02)01985-6}{10.1016/s0167-7799(02)01985-6}.
+doi:\url{http://doi.org/10.1016/s0167-7799(02)01985-6}.
 
-\hypertarget{ref-Burnham1990}{}
+\hyperdef{}{ref-Burnham1990}{\label{ref-Burnham1990}}
 15. \textbf{Burnham JC}. 1990. The evolution of editorial peer review.
 JAMA: The Journal of the American Medical Association \textbf{263}:1323.
-doi:\href{https://doi.org/10.1001/jama.1990.03440100023003}{10.1001/jama.1990.03440100023003}.
+doi:\url{http://doi.org/10.1001/jama.1990.03440100023003}.
 
-\hypertarget{ref-Pulverer2016}{}
+\hyperdef{}{ref-Pulverer2016}{\label{ref-Pulverer2016}}
 16. \textbf{Pulverer B}. 2016. Preparing for preprints. The EMBO Journal
 \textbf{35}:2617--2619.
-doi:\href{https://doi.org/10.15252/embj.201670030}{10.15252/embj.201670030}.
+doi:\url{http://doi.org/10.15252/embj.201670030}.
 
-\hypertarget{ref-Loew2016}{}
+\hyperdef{}{ref-Loew2016}{\label{ref-Loew2016}}
 17. \textbf{Loew LM}. 2016. Peer review and bioRxiv. Biophysical Journal
 \textbf{111}:E01--E02.
-doi:\href{https://doi.org/10.1016/j.bpj.2016.06.035}{10.1016/j.bpj.2016.06.035}.
+doi:\url{http://doi.org/10.1016/j.bpj.2016.06.035}.
 
-\hypertarget{ref-Vale2016}{}
+\hyperdef{}{ref-Vale2016}{\label{ref-Vale2016}}
 18. \textbf{Vale RD}, \textbf{Hyman AA}. 2016. Priority of discovery in
 the life sciences. eLife \textbf{5}.
-doi:\href{https://doi.org/10.7554/elife.16931}{10.7554/elife.16931}.
+doi:\url{http://doi.org/10.7554/elife.16931}.
 
-\hypertarget{ref-Dolgin2016}{}
+\hyperdef{}{ref-Dolgin2016}{\label{ref-Dolgin2016}}
 19. \textbf{Dolgin E}. 2016. Big biology projects warm up to preprints.
-Nature.
-doi:\href{https://doi.org/10.1038/nature.2016.21074}{10.1038/nature.2016.21074}.
+Nature. doi:\url{http://doi.org/10.1038/nature.2016.21074}.
 
-\hypertarget{ref-SinghChawla2017}{}
+\hyperdef{}{ref-SinghChawla2017}{\label{ref-SinghChawla2017}}
 20. \textbf{Chawla DS}. 2017. When a preprint becomes the final paper.
-Nature.
-doi:\href{https://doi.org/10.1038/nature.2017.21333}{10.1038/nature.2017.21333}.
+Nature. doi:\url{http://doi.org/10.1038/nature.2017.21333}.
 
-\hypertarget{ref-Black2017}{}
+\hyperdef{}{ref-Black2017}{\label{ref-Black2017}}
 21. \textbf{Black A}, \textbf{Potter B}, \textbf{Dudas G},
 \textbf{Feldstein L}, \textbf{Grubaugh ND}, \textbf{Andersen KG},
 \textbf{Ellis BR}, \textbf{Ellis EM}, \textbf{Bedford T}. 2017. Genetic
-characterization of the zika virus epidemic in the us virgin islands.
+characterization of the zika virus epidemic in the uS virgin islands.
 bioRxiv 113100.
 
-\hypertarget{ref-Afshinnekoo2015a}{}
+\hyperdef{}{ref-Afshinnekoo2015a}{\label{ref-Afshinnekoo2015a}}
 22. \textbf{Afshinnekoo E}, \textbf{Meydan C}, \textbf{Chowdhury S},
 \textbf{Jaroudi D}, \textbf{Boyer C}, \textbf{Bernstein N},
 \textbf{Maritz JM}, \textbf{Reeves D}, \textbf{Gandara J},
@@ -852,24 +857,21 @@ TR}, \textbf{Paolantonio KS}, \textbf{Alter E}, \textbf{Schadt EE},
 \textbf{Garbarino J}, \textbf{Prill RJ}, \textbf{Carlton JM},
 \textbf{Levy S}, \textbf{Mason CE}. 2015. Geospatial resolution of human
 and bacterial diversity with city-scale metagenomics. Cell Systems
-\textbf{1}:72--87.
-doi:\href{https://doi.org/10.1016/j.cels.2015.01.001}{10.1016/j.cels.2015.01.001}.
+\textbf{1}:72--87. doi:\url{http://doi.org/10.1016/j.cels.2015.01.001}.
 
-\hypertarget{ref-Petit2015}{}
+\hyperdef{}{ref-Petit2015}{\label{ref-Petit2015}}
 23. \textbf{Petit III RA}, \textbf{Ezewudo M}, \textbf{Joseph SJ},
 \textbf{Read TD}. 2015. Searching for anthrax in the New York City
-subway metagenome.
-doi:\href{https://doi.org/10.5281/zenodo.17158}{10.5281/zenodo.17158}.
+subway metagenome. doi:\url{http://doi.org/10.5281/zenodo.17158}.
 
-\hypertarget{ref-Ackelsberg2015}{}
+\hyperdef{}{ref-Ackelsberg2015}{\label{ref-Ackelsberg2015}}
 24. \textbf{Ackelsberg J}, \textbf{Rakeman J}, \textbf{Hughes S},
 \textbf{Petersen J}, \textbf{Mead P}, \textbf{Schriefer M},
 \textbf{Kingry L}, \textbf{Hoffmaster A}, \textbf{Gee JE}. 2015. Lack of
 evidence for plague or anthrax on the new york city subway. Cell Systems
-\textbf{1}:4--5.
-doi:\href{https://doi.org/10.1016/j.cels.2015.07.008}{10.1016/j.cels.2015.07.008}.
+\textbf{1}:4--5. doi:\url{http://doi.org/10.1016/j.cels.2015.07.008}.
 
-\hypertarget{ref-Afshinnekoo2015b}{}
+\hyperdef{}{ref-Afshinnekoo2015b}{\label{ref-Afshinnekoo2015b}}
 25. \textbf{Afshinnekoo E}, \textbf{Meydan C}, \textbf{Chowdhury S},
 \textbf{Jaroudi D}, \textbf{Boyer C}, \textbf{Bernstein N},
 \textbf{Maritz JM}, \textbf{Reeves D}, \textbf{Gandara J},
@@ -886,9 +888,9 @@ TR}, \textbf{Paolantonio KS}, \textbf{Alter E}, \textbf{Schadt EE},
 \textbf{Garbarino J}, \textbf{Prill RJ}, \textbf{Carlton JM},
 \textbf{Levy S}, \textbf{Mason CE}. 2015. Modern methods for delineating
 metagenomic complexity. Cell Systems \textbf{1}:6--7.
-doi:\href{https://doi.org/10.1016/j.cels.2015.07.007}{10.1016/j.cels.2015.07.007}.
+doi:\url{http://doi.org/10.1016/j.cels.2015.07.007}.
 
-\hypertarget{ref-Boothby2015}{}
+\hyperdef{}{ref-Boothby2015}{\label{ref-Boothby2015}}
 26. \textbf{Boothby TC}, \textbf{Tenlen JR}, \textbf{Smith FW},
 \textbf{Wang JR}, \textbf{Patanella KA}, \textbf{Nishimura EO},
 \textbf{Tintori SC}, \textbf{Li Q}, \textbf{Jones CD}, \textbf{Yandell
@@ -896,129 +898,126 @@ M}, \textbf{Messina DN}, \textbf{Glasscock J}, \textbf{Goldstein B}.
 2015. Evidence for extensive horizontal gene transfer from the draft
 genome of a tardigrade. Proceedings of the National Academy of Sciences
 \textbf{112}:15976--15981.
-doi:\href{https://doi.org/10.1073/pnas.1510461112}{10.1073/pnas.1510461112}.
+doi:\url{http://doi.org/10.1073/pnas.1510461112}.
 
-\hypertarget{ref-Koutsovoulos2016a}{}
+\hyperdef{}{ref-Koutsovoulos2016a}{\label{ref-Koutsovoulos2016a}}
 27. \textbf{Koutsovoulos G}, \textbf{Kumar S}, \textbf{Laetsch DR},
 \textbf{Stevens L}, \textbf{Daub J}, \textbf{Conlon C}, \textbf{Maroon
 H}, \textbf{Thomas F}, \textbf{Aboobaker A}, \textbf{Blaxter M}. 2016.
 No evidence for extensive horizontal gene transfer in the genome of the
 tardigrade hypsibius dujardini. bioRxiv 033464.
-doi:\href{https://doi.org/10.1101/033464}{10.1101/033464}.
+doi:\url{http://doi.org/10.1101/033464}.
 
-\hypertarget{ref-Boothby2016}{}
+\hyperdef{}{ref-Boothby2016}{\label{ref-Boothby2016}}
 28. \textbf{Boothby TC}, \textbf{Goldstein B}. 2016. Reply to bemm et
 al. and arakawa: Identifying foreign genes in independentHypsibius
 dujardinigenome assemblies. Proceedings of the National Academy of
 Sciences \textbf{113}:E3058--E3061.
-doi:\href{https://doi.org/10.1073/pnas.1601149113}{10.1073/pnas.1601149113}.
+doi:\url{http://doi.org/10.1073/pnas.1601149113}.
 
-\hypertarget{ref-Koutsovoulos2016b}{}
+\hyperdef{}{ref-Koutsovoulos2016b}{\label{ref-Koutsovoulos2016b}}
 29. \textbf{Koutsovoulos G}, \textbf{Kumar S}, \textbf{Laetsch DR},
 \textbf{Stevens L}, \textbf{Daub J}, \textbf{Conlon C}, \textbf{Maroon
 H}, \textbf{Thomas F}, \textbf{Aboobaker AA}, \textbf{Blaxter M}. 2016.
 No evidence for extensive horizontal gene transfer in the genome of the
 tardigradeHypsibius dujardini. Proceedings of the National Academy of
 Sciences \textbf{113}:5053--5058.
-doi:\href{https://doi.org/10.1073/pnas.1600338113}{10.1073/pnas.1600338113}.
+doi:\url{http://doi.org/10.1073/pnas.1600338113}.
 
-\hypertarget{ref-Bemm2016}{}
+\hyperdef{}{ref-Bemm2016}{\label{ref-Bemm2016}}
 30. \textbf{Bemm F}, \textbf{Weiß CL}, \textbf{Schultz J},
 \textbf{Förster F}. 2016. Genome of a tardigrade: Horizontal gene
 transfer or bacterial contamination? Proceedings of the National Academy
 of Sciences \textbf{113}:E3054--E3056.
-doi:\href{https://doi.org/10.1073/pnas.1525116113}{10.1073/pnas.1525116113}.
+doi:\url{http://doi.org/10.1073/pnas.1525116113}.
 
-\hypertarget{ref-Arakawa2016}{}
+\hyperdef{}{ref-Arakawa2016}{\label{ref-Arakawa2016}}
 31. \textbf{Arakawa K}. 2016. No evidence for extensive horizontal gene
 transfer from the draft genome of a tardigrade. Proceedings of the
 National Academy of Sciences \textbf{113}:E3057--E3057.
-doi:\href{https://doi.org/10.1073/pnas.1602711113}{10.1073/pnas.1602711113}.
+doi:\url{http://doi.org/10.1073/pnas.1602711113}.
 
-\hypertarget{ref-Delmont2016}{}
+\hyperdef{}{ref-Delmont2016}{\label{ref-Delmont2016}}
 32. \textbf{Delmont TO}, \textbf{Eren AM}. 2016. Identifying
 contamination with advanced visualization and analysis practices:
 Metagenomic approaches for eukaryotic genome assemblies.
-doi:\href{https://doi.org/10.7287/peerj.preprints.1695v1}{10.7287/peerj.preprints.1695v1}.
+doi:\url{http://doi.org/10.7287/peerj.preprints.1695v1}.
 
-\hypertarget{ref-Bik2016a}{}
+\hyperdef{}{ref-Bik2016a}{\label{ref-Bik2016a}}
 33. \textbf{Bik EM}, \textbf{Casadevall A}, \textbf{Fang FC}. 2016. The
 prevalence of inappropriate image duplication in biomedical research
-publications. bioRxiv 049452.
-doi:\href{https://doi.org/10.1101/049452}{10.1101/049452}.
+publications. bioRxiv 049452. doi:\url{http://doi.org/10.1101/049452}.
 
-\hypertarget{ref-Bik2016b}{}
+\hyperdef{}{ref-Bik2016b}{\label{ref-Bik2016b}}
 34. \textbf{Bik EM}, \textbf{Casadevall A}, \textbf{Fang FC}. 2016. The
 prevalence of inappropriate image duplication in biomedical research
 publications. mBio \textbf{7}:e00809--16.
-doi:\href{https://doi.org/10.1128/mbio.00809-16}{10.1128/mbio.00809-16}.
+doi:\url{http://doi.org/10.1128/mbio.00809-16}.
 
-\hypertarget{ref-WolfeSimon2010}{}
+\hyperdef{}{ref-WolfeSimon2010}{\label{ref-WolfeSimon2010}}
 35. \textbf{Wolfe-Simon F}, \textbf{Blum JS}, \textbf{Kulp TR},
 \textbf{Gordon GW}, \textbf{Hoeft SE}, \textbf{Pett-Ridge J},
 \textbf{Stolz JF}, \textbf{Webb SM}, \textbf{Weber PK}, \textbf{Davies
 PCW}, \textbf{Anbar AD}, \textbf{Oremland RS}. 2010. A bacterium that
 can grow by using arsenic instead of phosphorus. Science
 \textbf{332}:1163--1166.
-doi:\href{https://doi.org/10.1126/science.1197258}{10.1126/science.1197258}.
+doi:\url{http://doi.org/10.1126/science.1197258}.
 
-\hypertarget{ref-Altmetric}{}
+\hyperdef{}{ref-Altmetric}{\label{ref-Altmetric}}
 36. How is the Altmetric Attention Score calculated?
 \url{https://help.altmetric.com/support/solutions/articles/6000060969-how-is-the-altmetric-attention-score-calculated-}.
 
-\hypertarget{ref-Schloss2015}{}
+\hyperdef{}{ref-Schloss2015}{\label{ref-Schloss2015}}
 37. \textbf{Schloss PD}, \textbf{Westcott SL}, \textbf{Jenior ML},
 \textbf{Highlander SK}. 2015. Sequencing 16S rRNA gene fragments using
 the PacBio SMRT DNA sequencing system.
-doi:\href{https://doi.org/10.7287/peerj.preprints.778v1}{10.7287/peerj.preprints.778v1}.
+doi:\url{http://doi.org/10.7287/peerj.preprints.778v1}.
 
-\hypertarget{ref-Schloss2016a}{}
+\hyperdef{}{ref-Schloss2016a}{\label{ref-Schloss2016a}}
 38. \textbf{Schloss PD}, \textbf{Jenior ML}, \textbf{Koumpouras CC},
 \textbf{Westcott SL}, \textbf{Highlander SK}. 2016. Sequencing 16S rRNA
 gene fragments using the PacBio SMRT DNA sequencing system.
-doi:\href{https://doi.org/10.7287/peerj.preprints.778v2}{10.7287/peerj.preprints.778v2}.
+doi:\url{http://doi.org/10.7287/peerj.preprints.778v2}.
 
-\hypertarget{ref-Schloss2016b}{}
+\hyperdef{}{ref-Schloss2016b}{\label{ref-Schloss2016b}}
 39. \textbf{Schloss PD}, \textbf{Jenior ML}, \textbf{Koumpouras CC},
 \textbf{Westcott SL}, \textbf{Highlander SK}. 2016. Sequencing 16S rRNA
 gene fragments using the PacBio SMRT DNA sequencing system. PeerJ
-\textbf{4}:e1869.
-doi:\href{https://doi.org/10.7717/peerj.1869}{10.7717/peerj.1869}.
+\textbf{4}:e1869. doi:\url{http://doi.org/10.7717/peerj.1869}.
 
-\hypertarget{ref-Baxter2016a}{}
+\hyperdef{}{ref-Baxter2016a}{\label{ref-Baxter2016a}}
 40. \textbf{Baxter NT}, \textbf{Koumpouras CC}, \textbf{Rogers MA},
 \textbf{Ruffin MT}, \textbf{Schloss P}. 2016. DNA from fecal
 immunochemical test can replace stool for microbiota-based colorectal
 cancer screening. bioRxiv 048389.
-doi:\href{https://doi.org/10.1101/048389}{10.1101/048389}.
+doi:\url{http://doi.org/10.1101/048389}.
 
-\hypertarget{ref-Baxter2016b}{}
+\hyperdef{}{ref-Baxter2016b}{\label{ref-Baxter2016b}}
 41. \textbf{Baxter NT}, \textbf{Koumpouras CC}, \textbf{Rogers MAM},
 \textbf{Ruffin MT}, \textbf{Schloss PD}. 2016. DNA from fecal
 immunochemical test can replace stool for detection of colonic lesions
 using a microbiota-based model. Microbiome \textbf{4}.
-doi:\href{https://doi.org/10.1186/s40168-016-0205-y}{10.1186/s40168-016-0205-y}.
+doi:\url{http://doi.org/10.1186/s40168-016-0205-y}.
 
-\hypertarget{ref-Imperiale2016}{}
+\hyperdef{}{ref-Imperiale2016}{\label{ref-Imperiale2016}}
 42. \textbf{Imperiale MJ}, \textbf{Shenk T}, \textbf{Bertuzzi S}. 2016.
 mSphereDirect: Author-initiated peer review of manuscripts. mSphere
 \textbf{1}:e00307--16.
-doi:\href{https://doi.org/10.1128/msphere.00307-16}{10.1128/msphere.00307-16}.
+doi:\url{http://doi.org/10.1128/msphere.00307-16}.
 
-\hypertarget{ref-Vence2017}{}
+\hyperdef{}{ref-Vence2017}{\label{ref-Vence2017}}
 43. \textbf{Vence T}. 2017. Journals seek out preprints. TheScientist.
 
-\hypertarget{ref-Barsh2016}{}
+\hyperdef{}{ref-Barsh2016}{\label{ref-Barsh2016}}
 44. \textbf{Barsh GS}, \textbf{Bergman CM}, \textbf{Brown CD},
 \textbf{Singh ND}, \textbf{Copenhaver GP}. 2016. Bringing PLOS genetics
 editors to preprint servers. PLOS Genetics \textbf{12}:e1006448.
-doi:\href{https://doi.org/10.1371/journal.pgen.1006448}{10.1371/journal.pgen.1006448}.
+doi:\url{http://doi.org/10.1371/journal.pgen.1006448}.
 
-\hypertarget{ref-Hockett2013}{}
+\hyperdef{}{ref-Hockett2013}{\label{ref-Hockett2013}}
 45. \textbf{Hockett KL}, \textbf{Nishimura MT}, \textbf{Karlsrud E},
 \textbf{Dougherty K}, \textbf{Baltrus DA}. 2013. Interactions between
 genome architecture and virulence genes in pseudomonas syringae, strain
-cc1557 as a model. bioRxiv 000869.
-
+cC1557 as a model. bioRxiv 000869.
 
 \end{document}
