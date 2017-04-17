@@ -13,6 +13,7 @@ check_data.sh
 
 scopus.key
 
+Cover*
 
 
 export WOS_USER="WSMichigan_HG"
