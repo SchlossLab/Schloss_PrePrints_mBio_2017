@@ -1,32 +1,36 @@
 #https://github.com/CrossRef/rest-api-doc/blob/master/rest_api.md
 
-library(rjson)
+library(RJSONIO)
 library(RCurl)
 
 urls <- character()
 cursor <- "*"
-n_articles <- 1000
 
-while(n_articles == 1000){
-	search <- "http://api.crossref.org/prefixes/10.1101/works?rows=1000&filter=from-pub-date:2013-11&cursor="
+n_articles <- 1000
+counter <- n_articles
+
+while(counter == n_articles){
+	search <- paste0("http://api.crossref.org/prefixes/10.1101/works?rows=", n_articles, "&filter=from-pub-date:2013-11&cursor=")
 
 	search_cursor <- paste0(search, cursor)
 
+	page <- getURL(search_cursor)
+	json <- fromJSON(page, unexpected.escape="keep")
 
-	page <- fromJSON(getURL(search_cursor), unexpected.escape="keep")
+	if(json$status == "ok"){
+		cursor <- json$message["next-cursor"]
 
-	if(page$status == "ok"){
-	cursor <- page$message["next-cursor"]
+		articles <- json$message[["items"]]
+		counter <- length(articles)
 
-	articles <- page$message[["items"]]
-	n_articles <- length(articles)
+		urls <- c(urls, unlist(sapply(articles, '[[', 'URL')))
 
-	urls <- c(urls, unlist(sapply(articles, '[[', 'URL')))
-	print(length(urls))
+		print(length(urls))
 
 	} else {
-		n_articles <- 0;
+		counter <- 0;
 	}
+	Sys.sleep(0.5)
 }
 
 biorxiv_urls <- urls[grepl("10.1101\\/\\d{6}", urls)]
