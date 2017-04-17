@@ -4,7 +4,7 @@ library("rmarkdown")
 ## Options for knitr and Rmarkdown rendering
 ############################################################
 
-## output directory for figures
+# output directory for figures
 if (require("knitr")) {
     opts_chunk$set(fig.path="results/figures/")
     opts_knit$set(base.dir=normalizePath(getwd()))
