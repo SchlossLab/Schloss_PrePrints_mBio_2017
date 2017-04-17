@@ -15,10 +15,15 @@ The field of microbiology has experienced significant growth due to transformati
 	* httr (v.1.2.1)
 	* RCurl (v.1.95-4.8),
   * rentrez (v.1.0.4)
-  * RJSONIO (v.0.2.15)
+  * RJSONIO (v.1.3-0)
   * rvest (v.0.3.2)
   * sportcolors (v.0.0.1)
   * tidyr (v.0.6.0)
+
+```
+install.packages(c("cowplot", "dplyr", "ggplot2", "httr", "RCurl", "rentrez", "RJSONIO", "rvest",
+									"sportcolors", "tidyr"))
+```
 
 ### Running analysis
 
