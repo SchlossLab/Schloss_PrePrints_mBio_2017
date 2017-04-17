@@ -124,7 +124,7 @@ collect_data <- function(base_file){
 
 		#is_microbiology
 		test_is_microbiology <- function(x){
-			pattern <- "yeast|fung|viral|virus|archaea|bacteri|microb|microorganism|pathogen"
+			pattern <- "yeast|fung|viral|virus|archaea|bacteri|microb|microorganism|pathogen|protist"
 			grepl(pattern, x, ignore.case = TRUE)
 		}
 
