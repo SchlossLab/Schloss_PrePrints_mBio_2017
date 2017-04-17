@@ -1,4 +1,4 @@
-library(rjson)
+library(RJSONIO)
 
 aggregate_alt_data <- function(alt_file){
 	print(alt_file)
