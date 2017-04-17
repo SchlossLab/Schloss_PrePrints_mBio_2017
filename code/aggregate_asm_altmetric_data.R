@@ -1,4 +1,4 @@
-library(rjson)
+library(RJSONIO)
 library(dplyr)
 options(stringsAsFactors=FALSE)
 

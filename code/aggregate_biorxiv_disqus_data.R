@@ -1,5 +1,5 @@
-#install.packages("rjson")
-library(rjson)
+#install.packages("RJSONIO")
+library(RJSONIO)
 library(dplyr)
 
 parse_response <- function(x){
