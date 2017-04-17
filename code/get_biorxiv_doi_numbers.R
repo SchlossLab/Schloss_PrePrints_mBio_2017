@@ -1,6 +1,6 @@
 #https://github.com/CrossRef/rest-api-doc/blob/master/rest_api.md
 
-library(RJSONIOIO)
+library(RJSONIO)
 library(RCurl)
 
 urls <- character()

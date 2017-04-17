@@ -10,7 +10,7 @@ aggregate_alt_data <- function(alt_file){
 	if(json_file != "Not Found"){
 		alt_json <- fromJSON(json_file)
 		altmetric <- alt_json$score
-		altmetric_pct <- alt_json$context$all$pct
+		altmetric_pct <- alt_json$context$all["pct"]
 	} else {
 		altmetric <- 0
 		altmetric_pct <- 0
