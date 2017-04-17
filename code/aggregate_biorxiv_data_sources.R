@@ -23,7 +23,7 @@ collect_data <- function(base_file){
 	#doi
 	doi <- gsub("data/biorxiv/", "10.1101/", base_file)
 
-	if(!grepl("This paper is still processing|DOI Not Found", article_page)){
+	if(!grepl("This paper is still processing|DOI Not Found|TypeError", article_page)){
 
 		metric_page <- read_html(metric_file)
 		info_page <- read_html(info_file)
