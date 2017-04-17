@@ -13,7 +13,7 @@ parse_response <- function(x){
 }
 
 summarize_json <- function(x){
-	json_data <- fromJSON(file=x)$response
+	json_data <- fromJSON(content=x)$response
 	t(sapply(json_data, parse_response))
 }
 
