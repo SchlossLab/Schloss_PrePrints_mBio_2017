@@ -27,8 +27,10 @@ alt_listed <- lapply(altmetrics_files, aggregate_alt_data)
 alt_df <- do.call(rbind.data.frame, alt_listed)
 
 date <-read.table(file="data/asm_doi_urls.tsv", header=F, stringsAsFactors=F)
-date$V1 <- gsub("http://dx.doi.org/10.1128/(.*)", "data/asm_altmetric/\\1.json", date$V1)
-stopifnot(altmetrics_files == date$V1)
-alt_df[,"date"] <- date$V2
+colnames(date) <- c("article_id", "date")
+date$article_id <- gsub("http://dx.doi.org/10.1128/(.*)", "\\1", date$article_id)
 
-write.table(alt_df, "data/asm_altmetric/altmetric_summary.tsv", sep='\t', quote=F, row.names=F)
+summary_df <- left_join(alt_df, date, by="article_id")
+
+write.table(summary_df, "data/asm_altmetric/altmetric_summary.tsv", sep='\t', quote=F, row.names=F)
+
