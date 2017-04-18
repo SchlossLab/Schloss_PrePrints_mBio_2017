@@ -39,7 +39,8 @@ counts <- biorxiv %>% filter(!is.na(date_first_deposited)) %>%
 				 																			sapply(date_first_deposited, get_quarter))) %>%
 									group_by(year_quarter) %>%
 									summarize(all_n_pp = n(),
-														micro_n_pp = sum(is_microbiology | category =="Microbiology", na.rm=T))
+														micro_n_pp = sum(is_microbiology | category =="Microbiology", na.rm=T)) %>%
+									filter(year_quarter != "2017 2")
 
 tidied <- gather(counts, key=dataset, value=n_pp, all_n_pp, micro_n_pp)
 
@@ -51,10 +52,11 @@ time_course <- ggplot(tidied,
 										) +
 			geom_rect(aes(xmin=-Inf, xmax=1.5, ymin=-Inf, ymax=Inf), fill="#CCCCCC", color="#CCCCCC") +
 			geom_rect(aes(xmin=5.5, xmax=9.5, ymin=-Inf, ymax=Inf), fill="#CCCCCC", color="#CCCCCC") +
+			geom_rect(aes(xmin=13.5, xmax=Inf, ymin=-Inf, ymax=Inf), fill="#CCCCCC", color="#CCCCCC") +
 			geom_line(lineend="round") +
 			labs(x="Year", y="Number of Preprints\nPosted per Quarter") +
 			scale_x_continuous(breaks=c(3.5,7.5,11.5), labels=c("2014", "2015", "2016")) +
-			scale_y_continuous(limits=c(0,1500)) +
+			scale_y_continuous(limits=c(0,2010)) +
 			scale_color_manual(breaks=c("all_n_pp", "micro_n_pp"),
 													labels=c("All preprints", "Microbiology-affiliated"),
 													values=c("#002c5a", "#ffcb0b"), name=NULL)+
