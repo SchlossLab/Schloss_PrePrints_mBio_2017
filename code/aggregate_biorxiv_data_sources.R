@@ -23,7 +23,7 @@ collect_data <- function(base_file){
 	#doi
 	doi <- gsub("data/biorxiv/", "10.1101/", base_file)
 
-	if(!grepl("This paper is still processing|DOI Not Found|TypeError", article_page)){
+	if(!grepl("This paper is still processing|DOI Not Found", article_page)){
 
 		metric_page <- read_html(metric_file)
 		info_page <- read_html(info_file)
@@ -151,7 +151,12 @@ collect_data <- function(base_file){
 												.[[1]]
 
 			abstract_downloads <- sum(metric_table[,"Abstract"])
-			pdf_downloads <- sum(metric_table[,"PDF"])
+
+			if("PDF" %in% names(metric_table)){
+				pdf_downloads <- sum(metric_table[,"PDF"])
+			} else {
+				pdf_downloads <- 0
+			}
 		}
 
 
