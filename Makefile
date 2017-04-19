@@ -87,3 +87,15 @@ write.paper : data/processed/biorxiv_data_summary.tsv\
 	R -e "render('submission/Schloss_PrePrints_mBio_2017.Rmd', clean=FALSE)"
 	mv submission/Schloss_PrePrints_mBio_2017.utf8.md submission/Schloss_PrePrints_mBio_2017.md
 	rm submission/Schloss_PrePrints_mBio_2017.knit.md
+
+
+
+submission/track_changes.pdf: submission/Schloss_PrePrints_mBio_2017_orig.tex\
+															submission/Schloss_PrePrints_mBio_2017.tex
+	latexdiff submission/Schloss_PrePrints_mBio_2017_orig.tex submission/Schloss_PrePrints_mBio_2017.tex > diff.tex
+	pdflatex diff.tex
+	mv diff.pdf submission/track_changes.pdf
+	rm diff.*
+
+submission/response_to_reviewers.pdf : submission/response_to_reviewers.md submission/header.tex
+	pandoc $< -o $@ --include-in-header=submission/header.tex
