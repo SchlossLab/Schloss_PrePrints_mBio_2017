@@ -6,6 +6,9 @@ library(sportcolors)
 
 get_quarter <- function(date){
 
+	date <- gsub("older version \\(", "", date)
+	date <- gsub(" -.*", "", date)
+
 	month <- gsub("(.*) \\d{1,2}, \\d{4}", "\\1", date)
 
 	quarter <- NA
@@ -22,6 +25,15 @@ get_quarter <- function(date){
 	return(quarter)
 }
 
+get_year <- function(date){
+	date <- gsub("older version \\(", "", date)
+	date <- gsub(" -.*", "", date)
+	year <- gsub(".* \\d{1,2}, (\\d{4})", "\\1", date)
+
+	return(year)
+}
+
+
 my_theme <- theme_classic() +
 							theme(legend.title = element_blank(),
 										legend.background = element_blank(),
@@ -34,13 +46,14 @@ my_theme <- theme_classic() +
 biorxiv <- read.table(file="data/processed/biorxiv_data_summary.tsv", header=T, stringsAsFactors=F)
 biorxiv$journal_published_doi <- tolower(gsub("http://dx.doi.org/", "", biorxiv$journal_published_doi))
 
-counts <- biorxiv %>% filter(!is.na(date_first_deposited)) %>%
-									mutate(year_quarter = paste(gsub(".*, ", "", date_first_deposited),
+counts <- biorxiv %>%
+									filter(!is.na(date_first_deposited)) %>%
+									mutate(year_quarter = paste(sapply(date_first_deposited, get_year),
 				 																			sapply(date_first_deposited, get_quarter))) %>%
 									group_by(year_quarter) %>%
 									summarize(all_n_pp = n(),
 														micro_n_pp = sum(is_microbiology | category =="Microbiology", na.rm=T)) %>%
-									filter(year_quarter != "2017 2")
+									filter(year_quarter != "2017 4")
 
 tidied <- gather(counts, key=dataset, value=n_pp, all_n_pp, micro_n_pp)
 
@@ -55,8 +68,8 @@ time_course <- ggplot(tidied,
 			geom_rect(aes(xmin=13.5, xmax=Inf, ymin=-Inf, ymax=Inf), fill="#CCCCCC", color="#CCCCCC") +
 			geom_line(lineend="round") +
 			labs(x="Year", y="Number of Preprints\nPosted per Quarter") +
-			scale_x_continuous(breaks=c(3.5,7.5,11.5), labels=c("2014", "2015", "2016")) +
-			scale_y_continuous(limits=c(0,2010)) +
+			scale_x_continuous(breaks=c(3.5,7.5,11.5,15.5), labels=c("2014", "2015", "2016", "2017")) +
+			scale_y_continuous(limits=c(0,3200)) +
 			scale_color_manual(breaks=c("all_n_pp", "micro_n_pp"),
 													labels=c("All preprints", "Microbiology-affiliated"),
 													values=c("#002c5a", "#ffcb0b"), name=NULL)+
