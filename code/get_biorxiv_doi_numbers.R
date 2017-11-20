@@ -12,13 +12,13 @@ counter <- n_articles
 while(counter == n_articles){
 	search <- paste0("http://api.crossref.org/prefixes/10.1101/works?rows=", n_articles, "&filter=from-pub-date:2013-11&cursor=")
 
-	search_cursor <- paste0(search, cursor)
+	search_cursor <- paste0(search, URLencode(cursor, reserved=TRUE))
 
 	page <- getURL(search_cursor)
 	json <- fromJSON(page, unexpected.escape="keep")
 
 	if(json$status == "ok"){
-		cursor <- json$message["next-cursor"]
+		cursor <- json$message[["next-cursor"]]
 
 		articles <- json$message[["items"]]
 		counter <- length(articles)
@@ -26,12 +26,13 @@ while(counter == n_articles){
 		urls <- c(urls, unlist(sapply(articles, '[[', 'URL')))
 
 		print(length(urls))
-
+#		print(search_cursor)
 	} else {
 		counter <- 0;
 	}
-	Sys.sleep(0.5)
+	Sys.sleep(1.0)
 }
 
 biorxiv_urls <- urls[grepl("10.1101\\/\\d{6}", urls)]
 write(biorxiv_urls, "data/biorxiv_doi_urls.tsv")
+

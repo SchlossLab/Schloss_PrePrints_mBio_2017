@@ -22,7 +22,7 @@ data/biorxiv_altmetric/altmetric_summary.tsv : data/biorxiv_doi_urls.tsv code/ge
 	R -e "source('code/aggregate_biorxiv_altmetric_data.R')"
 
 
-data/biorxiv_disqus/comment_count.tsv : code/get_biorxiv_disqus_data.sh code/aggregate_biorxiv_disqus_data.R
+data/biorxiv_disqus/comment_count.tsv : code/get_biorxiv_disqus_data.sh code/aggregate_biorxiv_disqus_data.R data/biorxiv_doi_urls.tsv
 	bash code/get_biorxiv_disqus_data.sh
 	R -e "source('code/aggregate_biorxiv_disqus_data.R')"
 
@@ -40,7 +40,7 @@ data/processed/biorxiv_data_summary.tsv : $$(DOI_ARTICLES)\
 data/wos_counts/biorxiv_wos.csv : data/processed/biorxiv_data_summary.tsv code/get_biorxiv_pub_date.R
 	echo "DOI" > data/biorxiv_doi.csv
 	grep "dx.doi.org" data/processed/biorxiv_data_summary.tsv | cut -f 9 | sed -e "s=\"http://dx.doi.org/\(.*\)\"=\1=" | iconv -c -f utf-8 -t ascii >> data/biorxiv_doi.csv
-	python code/wos-amr/lookup_ids.py data/biorxiv_doi.csv data/wos_counts/biorxiv_wos.temp
+	python2 code/wos-amr/lookup_ids.py data/biorxiv_doi.csv data/wos_counts/biorxiv_wos.temp
 	R -e "source('code/get_biorxiv_pub_date.R')"
 	rm data/biorxiv_doi.csv data/wos_counts/biorxiv_wos.temp
 
@@ -61,7 +61,7 @@ data/asm_altmetric/altmetric_summary.tsv : data/asm_doi_urls.tsv code/get_asm_al
 data/wos_counts/asm_wos.csv : data/asm_doi_urls.tsv code/get_asm_pub_date.R
 	echo "DOI" > data/asm_doi.csv
 	cut -f 1 data/asm_doi_urls.tsv | cut -f 4,5 -d / >> data/asm_doi.csv
-	python code/wos-amr/lookup_ids.py data/asm_doi.csv data/wos_counts/asm_wos.temp
+	python2 code/wos-amr/lookup_ids.py data/asm_doi.csv data/wos_counts/asm_wos.temp
 	R -e "source('code/get_asm_pub_date.R')"
 	rm data/asm_doi.csv data/wos_counts/asm_wos.temp
 
