@@ -1,4 +1,4 @@
-\documentclass[11,]{article}
+\documentclass[11pt,]{article}
 \usepackage{lmodern}
 \usepackage{amssymb,amsmath}
 \usepackage{ifxetex,ifluatex}
@@ -9,12 +9,10 @@
 \else % if luatex or xelatex
   \ifxetex
     \usepackage{mathspec}
-    \usepackage{xltxtra,xunicode}
   \else
     \usepackage{fontspec}
   \fi
-  \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
-  \newcommand{\euro}{€}
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
 \fi
 % use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
@@ -24,7 +22,13 @@
 \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
 }{}
 \usepackage[margin=1.0in]{geometry}
-\usepackage{graphicx}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Preprinting Microbiology},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{graphicx,grffile}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
 \def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
@@ -33,27 +37,25 @@
 % margins by default, and it is still possible to overwrite the defaults
 % using explicit options in \includegraphics[width, height, ...]{}
 \setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
-\ifxetex
-  \usepackage[setpagesize=false, % page size defined by xetex
-              unicode=false, % unicode breaks when used with xetex
-              xetex]{hyperref}
-\else
-  \usepackage[unicode=true]{hyperref}
-\fi
-\hypersetup{breaklinks=true,
-            bookmarks=true,
-            pdfauthor={},
-            pdftitle={Preprinting Microbiology},
-            colorlinks=true,
-            citecolor=blue,
-            urlcolor=blue,
-            linkcolor=magenta,
-            pdfborder={0 0 0}}
-\urlstyle{same}  % don't use monospace font for urls
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
 \setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
 
 %%% Use protect on footnotes to avoid problems with footnotes in titles
 \let\rmarkdownfootnote\footnote%
@@ -94,9 +96,7 @@
 \usepackage{comment}
 
 \begin{document}
-
 \maketitle
-
 
 \begin{center}
 \vspace{25mm}
@@ -115,6 +115,7 @@ $\dagger$ To whom correspondence should be addressed: pschloss@umich.edu; Depart
 \end{center}
 
 \newpage
+
 \linenumbers
 
 \subsection{Abstract}\label{abstract}
@@ -480,12 +481,12 @@ they initially been posted as preprints.
 analyze the use of preprints, I downloaded the \emph{bioRxiv} on April
 17, 2017. I chose to analyze \emph{bioRxiv} preprints because these
 preprints are amenable for submission to ASM journals and there were
-9,780 \emph{bioRxiv} preprints compared to the 2,911 preprints that were
-available at \emph{PeerJ Preprint} on the same date. The code used to
-analyze these preprints and the rest of this manuscript are available as
-a reproducible GitHub repository at
+16,740 \emph{bioRxiv} preprints compared to the 2,911 preprints that
+were available at \emph{PeerJ Preprint} on the same date. The code used
+to analyze these preprints and the rest of this manuscript are available
+as a reproducible GitHub repository at
 \url{http://www.github.com/SchlossLab/Schloss_PrePrints_mBio_2017}.
-Among the 9,780 preprints on bioRxiv, 483 were assigned by the authors
+Among the 16,740 preprints on bioRxiv, 936 were assigned by the authors
 into the Microbiology category. One limitation of the \emph{bioRxiv}
 interface is the inability to assign manuscripts to multiple categories
 or to tag the content of the preprint. For example, this manuscript
@@ -495,10 +496,10 @@ developed a more permissive approach that classified preprints as being
 microbiology-affiliated if their title or abstract had words containing
 \emph{yeast}, \emph{fung}, \emph{viral}, \emph{virus}, \emph{archaea},
 \emph{bacteri}, \emph{microb}, \emph{microorganism}, \emph{pathogen}, or
-\emph{protist}. I identified 1,617 additional manuscripts that I
+\emph{protist}. I identified 2,699 additional manuscripts that I
 considered microbiology-affiliated. These microbiology-affiliated
-preprints were primarily assigned to the Evolutionary Biology (N=283),
-Bioinformatics (N=237), or Genomics (N=231) categories.
+preprints were primarily assigned to the Evolutionary Biology (N=400),
+Bioinformatics (N=353), or Genomics (N=339) categories.
 
 As the total number of preprints has grown exponentially since the
 creation of \emph{bioRxiv}, submission of microbiology-affiliated
@@ -506,21 +507,21 @@ preprints has largely followed this growth (\textbf{Figure 1A}).
 Although preprints are still relatively new, the collection of
 microbiology-affiliated preprints indicates widespread experimentation
 with the format and considerable geographic diversity. Reflecting the
-relative novelty of preprints, 1,484 (85.5\%) corresponding authors who
-submitted a microbiology-affiliated preprint (N=1,735 total) have posted
-a single preprint and 4.6\% have posted 3 or more preprints.
+relative novelty of preprints, 2,445 (84\%) corresponding authors who
+submitted a microbiology-affiliated preprint (N=2,910 total) have posted
+a single preprint and 5.5\% have posted 3 or more preprints.
 Corresponding authors that have posted microbiology-affiliated preprints
-are from 67 countries and are primarily affiliated with institutions in
-the United States (46.2\% of microbiology-affiliated preprints), United
-Kingdom (12.9\%), and Germany (4.6\%). As the preprint format matures,
-it will be interesting to see whether the fraction of authors that post
+are from 66 countries and are primarily affiliated with institutions in
+the United States (49.4\% of microbiology-affiliated preprints), United
+Kingdom (13.7\%), and Germany (4\%). As the preprint format matures, it
+will be interesting to see whether the fraction of authors that post
 multiple preprints increases and whether the geographic diversity
 amongst those authors is maintained.
 
 As stated above, preprints offer researchers the opportunity to improve
 the quality of their work by adding a more formal and public step to the
-scientific process. Among the microbiology-affiliated preprints, 197
-(9.3\%) had been commented on at least once and only 48 (2.3\%) more
+scientific process. Among the microbiology-affiliated preprints, 313
+(8.6\%) had been commented on at least once and only 58 (1.6\%) more
 than three times using the \emph{bioRxiv}-hosted commenting feature.
 Although the hosted commenting is only one mechanism for peer-review,
 this result was somewhat disturbing since the preprint model implicitly
@@ -533,10 +534,10 @@ is easier for the authors and others to integrate the feedback with the
 preprint. It is possible that incentives for open commenting and
 reviewing could shift the trend. Importantly, authors do appear to be
 incorporating feedback from colleagues or editorial insights from
-journals as 545 (25.9\%) microbiology-affiliated preprints were revised
+journals as 951 (26.2\%) microbiology-affiliated preprints were revised
 at least once. Among the preprints posted prior to January 1, 2016,
-31.3\% of the Microbiology category preprints, 35.6\% of the
-microbiology-affiliated preprints, and 33.6\% of all preprints have been
+36.0\% of the Microbiology category preprints, 36.7\% of the
+microbiology-affiliated preprints, and 33.9\% of all preprints have been
 published. As noted above, not all authors submit their preprints to
 journals. This would indicate that the ``acceptance rates'' are actually
 higher. Regardless, considering that these acceptance rates are higher
@@ -549,11 +550,11 @@ notoriously difficult. Using several metrics I sought to quantify the
 effect that broadly defined microbiology-affiliated preprints have had
 on the work of others. Using the download statistics associated with
 each preprint, I found that the median number of times an abstract or
-PDF had been accessed was 922 (IQR: 601 to 1446) and 301 (IQR: 155 to
-549), respectively. These values represent two aspects of posting a
-preprint. First, they reflect the number of times people were able to
-access science before it was published. Second, they reflect the number
-of times people were able to access a version of a manuscript that is
+PDF had been accessed was 898 (IQR: 585 to 1428) and 0 (IQR: 0 to 0),
+respectively. These values represent two aspects of posting a preprint.
+First, they reflect the number of times people were able to access
+science before it was published. Second, they reflect the number of
+times people were able to access a version of a manuscript that is
 published behind a paywall. To obtain a measure of a preprint's ability
 to garner attention and engage the general public, I obtained the
 Altmetric Attention Score for each preprint (\textbf{Figure 1B}). The
@@ -562,13 +563,13 @@ paper is mentioned in social media, traditional media, Wikipedia, policy
 documents, and other sources; it does not include the number of
 citations (41). A higher score indicates that a preprint received more
 attention. Microbiology-affiliated preprints have had a median Altmetric
-Attention Score of 7.6 (IQR: 3.2 to 16.6) and those of all preprints
-hosted at \emph{bioRxiv} have had a median score of 7.7 (IQR: 3.1 to
-16.2). For comparison, the median Altmetric Attention Score for articles
-published in \emph{mBio} published since 2013 was 5.0 (IQR: 1.5 to
-14.5). Of all scholarship tracked by Altmetric, the median Altmetric
-Attention Score for preprints posted at \emph{bioRxiv} ranks at the 87
-percentile (IQR: 75 to 94). A controversial, yet more traditional metric
+Attention Score of 7.7 (IQR: 3.1 to 16.6) and those of all preprints
+hosted at \emph{bioRxiv} have had a median score of 8.1 (IQR: 3.1 to
+16.5). For comparison, the median Altmetric Attention Score for articles
+published in \emph{mBio} published since 2013 was 5.8 (IQR: 1.8 to
+15.5). Of all scholarship tracked by Altmetric, the median Altmetric
+Attention Score for preprints posted at \emph{bioRxiv} ranks at the 86
+percentile (IQR: 74 to 93). A controversial, yet more traditional metric
 of impact has been the number of citations an article receives. I
 obtained the number of citations for the published versions of
 manuscripts that were initially posted as preprints. To allow for a
@@ -576,9 +577,9 @@ comparison to traditional journals, I considered the citations for
 preprints published in 2014 and 2015 as aggregated by Web of Science
 (\textbf{Figure 1C}). Among the preprints that were published and could
 be found in the Web of Science database, the median number of citations
-was 9 (IQR: 3-19; mean: 17.1). For comparison, among the papers
+was 14 (IQR: 6-26; mean: 26.7). For comparison, among the papers
 published in \emph{mBio} in 2014 and 2015, the median number of
-citations was 6 (IQR: 3-11; mean: 8.5). Although it is impossible to
+citations was 9 (IQR: 4-16; mean: 12.7). Although it is impossible to
 quantify the quality or impact of research with individual metrics, it
 is clear that the science presented in preprints and the publications
 that result from them are accepted by the microbiology community at a
@@ -703,11 +704,11 @@ manuscript. This work was supported in part by funding from the National
 Institutes of Health (P30DK034933). I appreciate the support of
 Altmetric, Inc and Thompson Reuters who provided advanced programming
 interface (API) access to their databases. The workflow utilized
-commands in GNU make (v.3.81), GNU bash (v.4.1.2), and R (v.3.3.3).
-Within R I utilized the cowplot (v.0.7.0), dplyr (v.0.5.0), ggplot2
-(v.2.2.1), httr (v.1.2.1), RCurl (v.1.95-4.8), rentrez (v.1.0.4),
+commands in GNU make (v.3.81), GNU bash (v.4.1.2), and R (v.3.4.1).
+Within R I utilized the cowplot (v.0.9.1), dplyr (v.0.7.0), ggplot2
+(v.2.2.1), httr (v.1.2.1), RCurl (v.1.95-4.8), rentrez (v.1.1.0),
 RJSONIO (v.1.3-0), rvest (v.0.3.2), sportcolors (v.0.0.1), and tidyr
-(v.0.6.1) packages. All journal policies and the information cited using
+(v.0.7.1) packages. All journal policies and the information cited using
 webpage links was current on April 21, 2017.
 
 \newpage
@@ -734,18 +735,23 @@ hosted at PeerJ Preprints.}
 
 \newpage
 
-\subsection{References}\label{references}
+\subsection*{References}\label{references}
+\addcontentsline{toc}{subsection}{References}
 
+\hypertarget{refs}{}
+\hypertarget{ref-Vale2015}{}
 1. \textbf{Vale RD}. 2015. Accelerating scientific publication in
 biology. Proceedings of the National Academy of Sciences
 \textbf{112}:13439--13446.
-doi:\href{http://dx.doi.org/10.1073/pnas.1511912112}{10.1073/pnas.1511912112}.
+doi:\href{https://doi.org/10.1073/pnas.1511912112}{10.1073/pnas.1511912112}.
 
+\hypertarget{ref-DesjardinsProulx2013}{}
 2. \textbf{Desjardins-Proulx P}, \textbf{White EP}, \textbf{Adamson JJ},
 \textbf{Ram K}, \textbf{Poisot T}, \textbf{Gravel D}. 2013. The case for
 open preprints in biology. PLoS Biology \textbf{11}:e1001563.
-doi:\href{http://dx.doi.org/10.1371/journal.pbio.1001563}{10.1371/journal.pbio.1001563}.
+doi:\href{https://doi.org/10.1371/journal.pbio.1001563}{10.1371/journal.pbio.1001563}.
 
+\hypertarget{ref-Berg2016}{}
 3. \textbf{Berg JM}, \textbf{Bhalla N}, \textbf{Bourne PE},
 \textbf{Chalfie M}, \textbf{Drubin DG}, \textbf{Fraser JS},
 \textbf{Greider CW}, \textbf{Hendricks M}, \textbf{Jones C},
@@ -756,95 +762,119 @@ doi:\href{http://dx.doi.org/10.1371/journal.pbio.1001563}{10.1371/journal.pbio.1
 \textbf{Turner P}, \textbf{Vale RD}, \textbf{VijayRaghavan K},
 \textbf{Wolberger C}. 2016. Preprints for the life sciences. Science
 \textbf{352}:899--901.
-doi:\href{http://dx.doi.org/10.1126/science.aaf9133}{10.1126/science.aaf9133}.
+doi:\href{https://doi.org/10.1126/science.aaf9133}{10.1126/science.aaf9133}.
 
+\hypertarget{ref-Bhalla2016}{}
 4. \textbf{Bhalla N}. 2016. Has the time come for preprints in biology?
 Molecular Biology of the Cell \textbf{27}:1185--1187.
-doi:\href{http://dx.doi.org/10.1091/mbc.e16-02-0123}{10.1091/mbc.e16-02-0123}.
+doi:\href{https://doi.org/10.1091/mbc.e16-02-0123}{10.1091/mbc.e16-02-0123}.
 
+\hypertarget{ref-NIH_NOTICE}{}
 5. Reporting preprints and other interim research products.
 \url{https://grants.nih.gov/grants/guide/notice-files/NOT-OD-17-050.html}.
 
+\hypertarget{ref-Nature1966}{}
 6. 1966. Preprints galore. Nature \textbf{211}:897--898.
-doi:\href{http://dx.doi.org/10.1038/211897a0}{10.1038/211897a0}.
+doi:\href{https://doi.org/10.1038/211897a0}{10.1038/211897a0}.
 
+\hypertarget{ref-Till2001}{}
 7. \textbf{Till JE}. 2001. Predecessors of preprint servers. Learned
 Publishing \textbf{14}:7--13.
-doi:\href{http://dx.doi.org/10.1087/09531510125100214}{10.1087/09531510125100214}.
+doi:\href{https://doi.org/10.1087/09531510125100214}{10.1087/09531510125100214}.
 
+\hypertarget{ref-Ginsparg2011}{}
 8. \textbf{Ginsparg P}. 2011. ArXiv at 20. Nature \textbf{476}:145--147.
-doi:\href{http://dx.doi.org/10.1038/476145a}{10.1038/476145a}.
+doi:\href{https://doi.org/10.1038/476145a}{10.1038/476145a}.
 
+\hypertarget{ref-Shuai2012}{}
 9. \textbf{Shuai X}, \textbf{Pepe A}, \textbf{Bollen J}. 2012. How the
 scientific community reacts to newly submitted preprints: Article
 downloads, twitter mentions, and citations. PLoS ONE \textbf{7}:e47523.
-doi:\href{http://dx.doi.org/10.1371/journal.pone.0047523}{10.1371/journal.pone.0047523}.
+doi:\href{https://doi.org/10.1371/journal.pone.0047523}{10.1371/journal.pone.0047523}.
 
+\hypertarget{ref-Callaway2013}{}
 10. \textbf{Callaway E}. 2013. Biomedical journal and publisher hope to
 bring preprints to life. Nature Medicine \textbf{19}:512--512.
-doi:\href{http://dx.doi.org/10.1038/nm0513-512}{10.1038/nm0513-512}.
+doi:\href{https://doi.org/10.1038/nm0513-512}{10.1038/nm0513-512}.
 
+\hypertarget{ref-mBio_ITA}{}
 11. mBio instructions to authors.
 \url{http://mbio.asm.org/site/misc/journal-ita_edi.xhtml}.
 
+\hypertarget{ref-PrePubMed}{}
 12. PrePubMed. \url{http://www.prepubmed.org}.
 
+\hypertarget{ref-ASAPbio}{}
 13. ASAPbio awarded \$1 million from Helmsley Charitable Trust for
 next-generation life sciences preprint infrastructure.
 \url{http://asapbio.org/feb23}.
 
+\hypertarget{ref-Angell1991}{}
 14. \textbf{Angell M}, \textbf{Kassirer JP}. 1991. The ingelfinger rule
 revisited. New England Journal of Medicine \textbf{325}:1371--1373.
-doi:\href{http://dx.doi.org/10.1056/nejm199111073251910}{10.1056/nejm199111073251910}.
+doi:\href{https://doi.org/10.1056/nejm199111073251910}{10.1056/nejm199111073251910}.
 
+\hypertarget{ref-ICMJE}{}
 15. Recommendations for the conduct, reporting, editing, and publication
 of scholarly work in medical journals.
 \url{http://www.icmje.org/news-and-editorials/icmje-recommendations_annotated_dec16.pdf}.
 
+\hypertarget{ref-PreprintPolicy}{}
 16. List of academic journals by preprint policy.
 \url{https://en.wikipedia.org/wiki/List_of_academic_journals_by_preprint_policy}.
 
+\hypertarget{ref-Sherpa}{}
 17. Publisher copyright policies \& self-archiving.
 \url{http://www.sherpa.ac.uk/romeo/index.php}.
 
+\hypertarget{ref-Drubin2016}{}
 18. \textbf{Drubin DG}. 2016. The mismeasure of scientific research
 articles and why MBoC quickly embraced preprints. Molecular Biology of
 the Cell \textbf{27}:3181--3182.
-doi:\href{http://dx.doi.org/10.1091/mbc.e16-09-0651}{10.1091/mbc.e16-09-0651}.
+doi:\href{https://doi.org/10.1091/mbc.e16-09-0651}{10.1091/mbc.e16-09-0651}.
 
+\hypertarget{ref-Spier2002}{}
 19. \textbf{Spier R}. 2002. The history of the peer-review process.
 Trends in Biotechnology \textbf{20}:357--358.
-doi:\href{http://dx.doi.org/10.1016/s0167-7799(02)01985-6}{10.1016/s0167-7799(02)01985-6}.
+doi:\href{https://doi.org/10.1016/s0167-7799(02)01985-6}{10.1016/s0167-7799(02)01985-6}.
 
+\hypertarget{ref-Burnham1990}{}
 20. \textbf{Burnham JC}. 1990. The evolution of editorial peer review.
 JAMA: The Journal of the American Medical Association \textbf{263}:1323.
-doi:\href{http://dx.doi.org/10.1001/jama.1990.03440100023003}{10.1001/jama.1990.03440100023003}.
+doi:\href{https://doi.org/10.1001/jama.1990.03440100023003}{10.1001/jama.1990.03440100023003}.
 
+\hypertarget{ref-Pulverer2016}{}
 21. \textbf{Pulverer B}. 2016. Preparing for preprints. The EMBO Journal
 \textbf{35}:2617--2619.
-doi:\href{http://dx.doi.org/10.15252/embj.201670030}{10.15252/embj.201670030}.
+doi:\href{https://doi.org/10.15252/embj.201670030}{10.15252/embj.201670030}.
 
+\hypertarget{ref-Loew2016}{}
 22. \textbf{Loew LM}. 2016. Peer review and bioRxiv. Biophysical Journal
 \textbf{111}:E01--E02.
-doi:\href{http://dx.doi.org/10.1016/j.bpj.2016.06.035}{10.1016/j.bpj.2016.06.035}.
+doi:\href{https://doi.org/10.1016/j.bpj.2016.06.035}{10.1016/j.bpj.2016.06.035}.
 
+\hypertarget{ref-Vale2016}{}
 23. \textbf{Vale RD}, \textbf{Hyman AA}. 2016. Priority of discovery in
 the life sciences. eLife \textbf{5}.
-doi:\href{http://dx.doi.org/10.7554/elife.16931}{10.7554/elife.16931}.
+doi:\href{https://doi.org/10.7554/elife.16931}{10.7554/elife.16931}.
 
-24. Interim research product rFI response from fASEB.
+\hypertarget{ref-FASEB_letter}{}
+24. Interim research product rfi response from faseb.
 \url{http://www.faseb.org/Portals/2/PDFs/opa/2016/Interim\%20Research\%20Product\%20RFI.pdf}.
 
+\hypertarget{ref-SinghChawla2017}{}
 25. \textbf{Chawla DS}. 2017. When a preprint becomes the final paper.
 Nature.
-doi:\href{http://dx.doi.org/10.1038/nature.2017.21333}{10.1038/nature.2017.21333}.
+doi:\href{https://doi.org/10.1038/nature.2017.21333}{10.1038/nature.2017.21333}.
 
+\hypertarget{ref-Black2017}{}
 26. \textbf{Black A}, \textbf{Potter B}, \textbf{Dudas G},
 \textbf{Feldstein L}, \textbf{Grubaugh ND}, \textbf{Andersen KG},
 \textbf{Ellis BR}, \textbf{Ellis EM}, \textbf{Bedford T}. 2017. Genetic
-characterization of the zika virus epidemic in the uS virgin islands.
+characterization of the zika virus epidemic in the us virgin islands.
 bioRxiv 113100.
 
+\hypertarget{ref-Afshinnekoo2015a}{}
 27. \textbf{Afshinnekoo E}, \textbf{Meydan C}, \textbf{Chowdhury S},
 \textbf{Jaroudi D}, \textbf{Boyer C}, \textbf{Bernstein N},
 \textbf{Maritz JM}, \textbf{Reeves D}, \textbf{Gandara J},
@@ -853,7 +883,7 @@ bioRxiv 113100.
 \textbf{Jorgensen E}, \textbf{Kolokotronis S-O}, \textbf{Kirchberger N},
 \textbf{Garcia I}, \textbf{Gandara D}, \textbf{Dhanraj S},
 \textbf{Nawrin T}, \textbf{Saletore Y}, \textbf{Alexander N},
-\textbf{Vijay P}, \textbf{H{é}naff EM}, \textbf{Zumbo P}, \textbf{Walsh
+\textbf{Vijay P}, \textbf{Hénaff EM}, \textbf{Zumbo P}, \textbf{Walsh
 M}, \textbf{O'Mullan GD}, \textbf{Tighe S}, \textbf{Dudley JT},
 \textbf{Dunaif A}, \textbf{Ennis S}, \textbf{O'Halloran E},
 \textbf{Magalhaes TR}, \textbf{Boone B}, \textbf{Jones AL}, \textbf{Muth
@@ -862,20 +892,23 @@ TR}, \textbf{Paolantonio KS}, \textbf{Alter E}, \textbf{Schadt EE},
 \textbf{Levy S}, \textbf{Mason CE}. 2015. Geospatial resolution of human
 and bacterial diversity with city-scale metagenomics. Cell Systems
 \textbf{1}:72--87.
-doi:\href{http://dx.doi.org/10.1016/j.cels.2015.01.001}{10.1016/j.cels.2015.01.001}.
+doi:\href{https://doi.org/10.1016/j.cels.2015.01.001}{10.1016/j.cels.2015.01.001}.
 
+\hypertarget{ref-Petit2015}{}
 28. \textbf{Petit III RA}, \textbf{Ezewudo M}, \textbf{Joseph SJ},
 \textbf{Read TD}. 2015. Searching for anthrax in the New York City
 subway metagenome.
-doi:\href{http://dx.doi.org/10.5281/zenodo.17158}{10.5281/zenodo.17158}.
+doi:\href{https://doi.org/10.5281/zenodo.17158}{10.5281/zenodo.17158}.
 
+\hypertarget{ref-Ackelsberg2015}{}
 29. \textbf{Ackelsberg J}, \textbf{Rakeman J}, \textbf{Hughes S},
 \textbf{Petersen J}, \textbf{Mead P}, \textbf{Schriefer M},
 \textbf{Kingry L}, \textbf{Hoffmaster A}, \textbf{Gee JE}. 2015. Lack of
 evidence for plague or anthrax on the new york city subway. Cell Systems
 \textbf{1}:4--5.
-doi:\href{http://dx.doi.org/10.1016/j.cels.2015.07.008}{10.1016/j.cels.2015.07.008}.
+doi:\href{https://doi.org/10.1016/j.cels.2015.07.008}{10.1016/j.cels.2015.07.008}.
 
+\hypertarget{ref-Afshinnekoo2015b}{}
 30. \textbf{Afshinnekoo E}, \textbf{Meydan C}, \textbf{Chowdhury S},
 \textbf{Jaroudi D}, \textbf{Boyer C}, \textbf{Bernstein N},
 \textbf{Maritz JM}, \textbf{Reeves D}, \textbf{Gandara J},
@@ -884,7 +917,7 @@ doi:\href{http://dx.doi.org/10.1016/j.cels.2015.07.008}{10.1016/j.cels.2015.07.0
 \textbf{Jorgensen E}, \textbf{Kolokotronis S-O}, \textbf{Kirchberger N},
 \textbf{Garcia I}, \textbf{Gandara D}, \textbf{Dhanraj S},
 \textbf{Nawrin T}, \textbf{Saletore Y}, \textbf{Alexander N},
-\textbf{Vijay P}, \textbf{H{é}naff EM}, \textbf{Zumbo P}, \textbf{Walsh
+\textbf{Vijay P}, \textbf{Hénaff EM}, \textbf{Zumbo P}, \textbf{Walsh
 M}, \textbf{O'Mullan GD}, \textbf{Tighe S}, \textbf{Dudley JT},
 \textbf{Dunaif A}, \textbf{Ennis S}, \textbf{O'Halloran E},
 \textbf{Magalhaes TR}, \textbf{Boone B}, \textbf{Jones AL}, \textbf{Muth
@@ -892,8 +925,9 @@ TR}, \textbf{Paolantonio KS}, \textbf{Alter E}, \textbf{Schadt EE},
 \textbf{Garbarino J}, \textbf{Prill RJ}, \textbf{Carlton JM},
 \textbf{Levy S}, \textbf{Mason CE}. 2015. Modern methods for delineating
 metagenomic complexity. Cell Systems \textbf{1}:6--7.
-doi:\href{http://dx.doi.org/10.1016/j.cels.2015.07.007}{10.1016/j.cels.2015.07.007}.
+doi:\href{https://doi.org/10.1016/j.cels.2015.07.007}{10.1016/j.cels.2015.07.007}.
 
+\hypertarget{ref-Boothby2015}{}
 31. \textbf{Boothby TC}, \textbf{Tenlen JR}, \textbf{Smith FW},
 \textbf{Wang JR}, \textbf{Patanella KA}, \textbf{Nishimura EO},
 \textbf{Tintori SC}, \textbf{Li Q}, \textbf{Jones CD}, \textbf{Yandell
@@ -901,109 +935,129 @@ M}, \textbf{Messina DN}, \textbf{Glasscock J}, \textbf{Goldstein B}.
 2015. Evidence for extensive horizontal gene transfer from the draft
 genome of a tardigrade. Proceedings of the National Academy of Sciences
 \textbf{112}:15976--15981.
-doi:\href{http://dx.doi.org/10.1073/pnas.1510461112}{10.1073/pnas.1510461112}.
+doi:\href{https://doi.org/10.1073/pnas.1510461112}{10.1073/pnas.1510461112}.
 
+\hypertarget{ref-Koutsovoulos2016a}{}
 32. \textbf{Koutsovoulos G}, \textbf{Kumar S}, \textbf{Laetsch DR},
 \textbf{Stevens L}, \textbf{Daub J}, \textbf{Conlon C}, \textbf{Maroon
 H}, \textbf{Thomas F}, \textbf{Aboobaker A}, \textbf{Blaxter M}. 2016.
 No evidence for extensive horizontal gene transfer in the genome of the
 tardigrade hypsibius dujardini. bioRxiv 033464.
-doi:\href{http://dx.doi.org/10.1101/033464}{10.1101/033464}.
+doi:\href{https://doi.org/10.1101/033464}{10.1101/033464}.
 
+\hypertarget{ref-Boothby2016}{}
 33. \textbf{Boothby TC}, \textbf{Goldstein B}. 2016. Reply to bemm et
 al. and arakawa: Identifying foreign genes in independentHypsibius
 dujardinigenome assemblies. Proceedings of the National Academy of
 Sciences \textbf{113}:E3058--E3061.
-doi:\href{http://dx.doi.org/10.1073/pnas.1601149113}{10.1073/pnas.1601149113}.
+doi:\href{https://doi.org/10.1073/pnas.1601149113}{10.1073/pnas.1601149113}.
 
+\hypertarget{ref-Koutsovoulos2016b}{}
 34. \textbf{Koutsovoulos G}, \textbf{Kumar S}, \textbf{Laetsch DR},
 \textbf{Stevens L}, \textbf{Daub J}, \textbf{Conlon C}, \textbf{Maroon
 H}, \textbf{Thomas F}, \textbf{Aboobaker AA}, \textbf{Blaxter M}. 2016.
 No evidence for extensive horizontal gene transfer in the genome of the
 tardigradeHypsibius dujardini. Proceedings of the National Academy of
 Sciences \textbf{113}:5053--5058.
-doi:\href{http://dx.doi.org/10.1073/pnas.1600338113}{10.1073/pnas.1600338113}.
+doi:\href{https://doi.org/10.1073/pnas.1600338113}{10.1073/pnas.1600338113}.
 
-35. \textbf{Bemm F}, \textbf{Wei{ß} CL}, \textbf{Schultz J},
+\hypertarget{ref-Bemm2016}{}
+35. \textbf{Bemm F}, \textbf{Weiß CL}, \textbf{Schultz J},
 \textbf{Förster F}. 2016. Genome of a tardigrade: Horizontal gene
 transfer or bacterial contamination? Proceedings of the National Academy
 of Sciences \textbf{113}:E3054--E3056.
-doi:\href{http://dx.doi.org/10.1073/pnas.1525116113}{10.1073/pnas.1525116113}.
+doi:\href{https://doi.org/10.1073/pnas.1525116113}{10.1073/pnas.1525116113}.
 
+\hypertarget{ref-Arakawa2016}{}
 36. \textbf{Arakawa K}. 2016. No evidence for extensive horizontal gene
 transfer from the draft genome of a tardigrade. Proceedings of the
 National Academy of Sciences \textbf{113}:E3057--E3057.
-doi:\href{http://dx.doi.org/10.1073/pnas.1602711113}{10.1073/pnas.1602711113}.
+doi:\href{https://doi.org/10.1073/pnas.1602711113}{10.1073/pnas.1602711113}.
 
+\hypertarget{ref-Delmont2016}{}
 37. \textbf{Delmont TO}, \textbf{Eren AM}. 2016. Identifying
 contamination with advanced visualization and analysis practices:
-metagenomic approaches for eukaryotic genome assemblies.
-doi:\href{http://dx.doi.org/10.7287/peerj.preprints.1695v1}{10.7287/peerj.preprints.1695v1}.
+Metagenomic approaches for eukaryotic genome assemblies.
+doi:\href{https://doi.org/10.7287/peerj.preprints.1695v1}{10.7287/peerj.preprints.1695v1}.
 
+\hypertarget{ref-Bik2016a}{}
 38. \textbf{Bik EM}, \textbf{Casadevall A}, \textbf{Fang FC}. 2016. The
 prevalence of inappropriate image duplication in biomedical research
 publications. bioRxiv 049452.
-doi:\href{http://dx.doi.org/10.1101/049452}{10.1101/049452}.
+doi:\href{https://doi.org/10.1101/049452}{10.1101/049452}.
 
+\hypertarget{ref-Bik2016b}{}
 39. \textbf{Bik EM}, \textbf{Casadevall A}, \textbf{Fang FC}. 2016. The
 prevalence of inappropriate image duplication in biomedical research
 publications. mBio \textbf{7}:e00809--16.
-doi:\href{http://dx.doi.org/10.1128/mbio.00809-16}{10.1128/mbio.00809-16}.
+doi:\href{https://doi.org/10.1128/mbio.00809-16}{10.1128/mbio.00809-16}.
 
+\hypertarget{ref-WolfeSimon2010}{}
 40. \textbf{Wolfe-Simon F}, \textbf{Blum JS}, \textbf{Kulp TR},
 \textbf{Gordon GW}, \textbf{Hoeft SE}, \textbf{Pett-Ridge J},
 \textbf{Stolz JF}, \textbf{Webb SM}, \textbf{Weber PK}, \textbf{Davies
 PCW}, \textbf{Anbar AD}, \textbf{Oremland RS}. 2010. A bacterium that
 can grow by using arsenic instead of phosphorus. Science
 \textbf{332}:1163--1166.
-doi:\href{http://dx.doi.org/10.1126/science.1197258}{10.1126/science.1197258}.
+doi:\href{https://doi.org/10.1126/science.1197258}{10.1126/science.1197258}.
 
+\hypertarget{ref-Altmetric}{}
 41. How is the Altmetric Attention Score calculated?
 \url{https://help.altmetric.com/support/solutions/articles/6000060969-how-is-the-altmetric-attention-score-calculated-}.
 
+\hypertarget{ref-Schloss2015}{}
 42. \textbf{Schloss PD}, \textbf{Westcott SL}, \textbf{Jenior ML},
 \textbf{Highlander SK}. 2015. Sequencing 16S rRNA gene fragments using
 the PacBio SMRT DNA sequencing system.
-doi:\href{http://dx.doi.org/10.7287/peerj.preprints.778v1}{10.7287/peerj.preprints.778v1}.
+doi:\href{https://doi.org/10.7287/peerj.preprints.778v1}{10.7287/peerj.preprints.778v1}.
 
+\hypertarget{ref-Schloss2016a}{}
 43. \textbf{Schloss PD}, \textbf{Jenior ML}, \textbf{Koumpouras CC},
 \textbf{Westcott SL}, \textbf{Highlander SK}. 2016. Sequencing 16S rRNA
 gene fragments using the PacBio SMRT DNA sequencing system.
-doi:\href{http://dx.doi.org/10.7287/peerj.preprints.778v2}{10.7287/peerj.preprints.778v2}.
+doi:\href{https://doi.org/10.7287/peerj.preprints.778v2}{10.7287/peerj.preprints.778v2}.
 
+\hypertarget{ref-Schloss2016b}{}
 44. \textbf{Schloss PD}, \textbf{Jenior ML}, \textbf{Koumpouras CC},
 \textbf{Westcott SL}, \textbf{Highlander SK}. 2016. Sequencing 16S rRNA
 gene fragments using the PacBio SMRT DNA sequencing system. PeerJ
 \textbf{4}:e1869.
-doi:\href{http://dx.doi.org/10.7717/peerj.1869}{10.7717/peerj.1869}.
+doi:\href{https://doi.org/10.7717/peerj.1869}{10.7717/peerj.1869}.
 
+\hypertarget{ref-Baxter2016a}{}
 45. \textbf{Baxter NT}, \textbf{Koumpouras CC}, \textbf{Rogers MA},
 \textbf{Ruffin MT}, \textbf{Schloss P}. 2016. DNA from fecal
 immunochemical test can replace stool for microbiota-based colorectal
 cancer screening. bioRxiv 048389.
-doi:\href{http://dx.doi.org/10.1101/048389}{10.1101/048389}.
+doi:\href{https://doi.org/10.1101/048389}{10.1101/048389}.
 
+\hypertarget{ref-Baxter2016b}{}
 46. \textbf{Baxter NT}, \textbf{Koumpouras CC}, \textbf{Rogers MAM},
 \textbf{Ruffin MT}, \textbf{Schloss PD}. 2016. DNA from fecal
 immunochemical test can replace stool for detection of colonic lesions
 using a microbiota-based model. Microbiome \textbf{4}.
-doi:\href{http://dx.doi.org/10.1186/s40168-016-0205-y}{10.1186/s40168-016-0205-y}.
+doi:\href{https://doi.org/10.1186/s40168-016-0205-y}{10.1186/s40168-016-0205-y}.
 
+\hypertarget{ref-Imperiale2016}{}
 47. \textbf{Imperiale MJ}, \textbf{Shenk T}, \textbf{Bertuzzi S}. 2016.
 mSphereDirect: Author-initiated peer review of manuscripts. mSphere
 \textbf{1}:e00307--16.
-doi:\href{http://dx.doi.org/10.1128/msphere.00307-16}{10.1128/msphere.00307-16}.
+doi:\href{https://doi.org/10.1128/msphere.00307-16}{10.1128/msphere.00307-16}.
 
+\hypertarget{ref-Vence2017}{}
 48. \textbf{Vence T}. 2017. Journals seek out preprints. TheScientist.
 
+\hypertarget{ref-Barsh2016}{}
 49. \textbf{Barsh GS}, \textbf{Bergman CM}, \textbf{Brown CD},
 \textbf{Singh ND}, \textbf{Copenhaver GP}. 2016. Bringing PLOS genetics
 editors to preprint servers. PLOS Genetics \textbf{12}:e1006448.
-doi:\href{http://dx.doi.org/10.1371/journal.pgen.1006448}{10.1371/journal.pgen.1006448}.
+doi:\href{https://doi.org/10.1371/journal.pgen.1006448}{10.1371/journal.pgen.1006448}.
 
+\hypertarget{ref-Hockett2013}{}
 50. \textbf{Hockett KL}, \textbf{Nishimura MT}, \textbf{Karlsrud E},
 \textbf{Dougherty K}, \textbf{Baltrus DA}. 2013. Interactions between
 genome architecture and virulence genes in pseudomonas syringae, strain
-cC1557 as a model. bioRxiv 000869.
+cc1557 as a model. bioRxiv 000869.
+
 
 \end{document}

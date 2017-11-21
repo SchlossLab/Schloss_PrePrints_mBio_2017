@@ -11,13 +11,13 @@ n_articles <- 1000
 while(n_articles == 1000){
 	search <- "http://api.crossref.org/prefixes/10.1128/works?rows=1000&filter=from-pub-date:2010-01&cursor="
 
-	search_cursor <- paste0(search, cursor)
+	search_cursor <- paste0(search, URLencode(cursor, reserved=TRUE))
 
 
 	page <- fromJSON(getURL(search_cursor), unexpected.escape="keep")
 
 	if(page$status == "ok"){
-		cursor <- page$message["next-cursor"]
+		cursor <- page$message[["next-cursor"]]
 
 		articles <- page$message[["items"]]
 		n_articles <- length(articles)
